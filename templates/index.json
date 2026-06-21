@@ -1,0 +1,175 @@
+{
+  "sections": {
+    "main": {
+      "type": "cc-homepage-shell",
+      "settings": {
+        "render_shell_chrome": true,
+        "show_hero_copy": true,
+        "announcement_text": "Premium custom teamwear. Built to represent.",
+        "minimum_order_text": "Minimum order: 6 pieces per style",
+        "support_text": "Expert support. Fast mockups.",
+        "hero_kicker": "Team identity is everything.",
+        "hero_title": "Built for programs that show up dressed.",
+        "hero_copy": "Crossover Culture builds the visual system around a program: reversible sets, basketball uniforms, shooting layers, travel pieces, and daily essentials that carry one standard from arrival to tip.",
+        "primary_cta_label": "Outfit your program",
+        "secondary_cta_label": "Explore collections",
+        "hero_overlay_title": "Premium teamwear built to represent.",
+        "hero_overlay_copy": "Premium custom teamwear built around uniforms, preparation, travel, and the details that make a program look complete.",
+        "collection_kicker": "Shop collections",
+        "collection_title": "One world. Every collection in view.",
+        "collection_copy": "Uniforms frame game-day identity. Shooting layers lock in preparation. Travel gear handles arrival and off-court presence. Base layers, fleece, shorts, and accessories fill out the daily program standard.",
+        "story_kicker": "Program standard",
+        "story_title": "Designed around how teams arrive.",
+        "story_copy": "This storefront is built to merchandise the brand first, then move teams cleanly into the right order path for uniforms, shooting, travel, and staff gear.",
+        "route_kicker": "Protected ordering paths",
+        "route_title": "Start the right order without breaking the system.",
+        "route_copy": "The storefront shell elevates discovery, then directs teams into the right order path for each custom category.",
+        "footer_kicker": "Ready to build the program standard?",
+        "footer_title": "Stay close to new drops, teamwear launches, and ordering updates.",
+        "footer_copy": "Use this footer as the support and newsletter anchor for the storefront, with a premium tone and clean route into every major collection."
+      },
+      "blocks": {
+        "collection_1": {
+          "type": "collection_card",
+          "settings": {
+            "index_label": "01",
+            "kicker": "Game-day identity",
+            "title": "Reversible Jerseys",
+            "copy": "Two looks. One standard.",
+            "collection_handle": "reversible-jerseys",
+            "card_size": "featured",
+            "anchor": "right",
+            "desktop_x": 6,
+            "desktop_y": 32
+          }
+        },
+        "collection_2": {
+          "type": "collection_card",
+          "settings": {
+            "index_label": "02",
+            "kicker": "Home and away identity",
+            "title": "Reversible Basketball Uniforms",
+            "copy": "One system for both sides of game day.",
+            "collection_handle": "reversible-basketball-uniforms",
+            "card_size": "tall",
+            "anchor": "right",
+            "desktop_x": 21,
+            "desktop_y": 30
+          }
+        },
+        "collection_3": {
+          "type": "collection_card",
+          "settings": {
+            "index_label": "03",
+            "kicker": "Game-day identity",
+            "title": "Basketball Uniforms",
+            "copy": "Purpose-built uniforms with a stronger presence.",
+            "collection_handle": "basketball-uniforms",
+            "card_size": "standard",
+            "anchor": "right",
+            "desktop_x": 36,
+            "desktop_y": 44
+          }
+        },
+        "collection_4": {
+          "type": "collection_card",
+          "settings": {
+            "index_label": "04",
+            "kicker": "Locked-in preparation",
+            "title": "Shooting Shirts",
+            "copy": "Lightweight layers built for rhythm before tip.",
+            "collection_handle": "shooting-shirts",
+            "card_size": "standard",
+            "anchor": "left",
+            "desktop_x": 72,
+            "desktop_y": 38
+          }
+        },
+        "collection_5": {
+          "type": "collection_card",
+          "settings": {
+            "index_label": "05",
+            "kicker": "Arrival and off-court presence",
+            "title": "Travel Gear",
+            "copy": "Programs arrive together. The gear should say it.",
+            "collection_handle": "travel-gear",
+            "card_size": "standard",
+            "anchor": "left",
+            "desktop_x": 88,
+            "desktop_y": 77
+          }
+        },
+        "collection_6": {
+          "type": "collection_card",
+          "settings": {
+            "index_label": "06",
+            "kicker": "Daily program essential",
+            "title": "Hoodies & Fleece",
+            "copy": "Warm-up, recover, travel out.",
+            "collection_handle": "hoodies-fleece",
+            "card_size": "standard",
+            "anchor": "left",
+            "desktop_x": 90,
+            "desktop_y": 42
+          }
+        },
+        "collection_7": {
+          "type": "collection_card",
+          "settings": {
+            "index_label": "07",
+            "kicker": "Daily reps",
+            "title": "Practice Shorts",
+            "copy": "Made for repeat work and daily training windows.",
+            "collection_handle": "practice-shorts",
+            "card_size": "standard",
+            "anchor": "right",
+            "desktop_x": 8,
+            "desktop_y": 76
+          }
+        },
+        "collection_8": {
+          "type": "collection_card",
+          "settings": {
+            "index_label": "08",
+            "kicker": "Finish the system",
+            "title": "Accessories",
+            "copy": "Bags, hats, and small pieces that complete the look.",
+            "collection_handle": "accessories",
+            "card_size": "standard",
+            "anchor": "left",
+            "desktop_x": 72,
+            "desktop_y": 73
+          }
+        },
+        "collection_9": {
+          "type": "collection_card",
+          "settings": {
+            "index_label": "09",
+            "kicker": "Performance system",
+            "title": "Base Layers",
+            "copy": "Foundation pieces built under every rep.",
+            "collection_handle": "base-layers",
+            "card_size": "standard",
+            "anchor": "left",
+            "desktop_x": 64,
+            "desktop_y": 67
+          }
+        }
+      },
+      "block_order": [
+        "collection_1",
+        "collection_2",
+        "collection_3",
+        "collection_4",
+        "collection_5",
+        "collection_6",
+        "collection_7",
+        "collection_8",
+        "collection_9"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

@@ -1,0 +1,161 @@
+<header class="cc-shell__header">
+  <div class="cc-shell__announcement">
+    <div class="cc-shell__container cc-shell__announcement-bar">
+      <span class="cc-shell__announcement-note">{{ announcement_text }}</span>
+      <span class="cc-shell__announcement-note">{{ minimum_order_text }}</span>
+      <span class="cc-shell__announcement-note">{{ support_text }}</span>
+    </div>
+  </div>
+
+  <div class="cc-shell__header-frame">
+    <div class="cc-shell__container cc-shell__header-row">
+      <a class="cc-shell__brand" href="{{ routes.root_url }}">
+        <span class="cc-shell__brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 2.25 19 6v4.25c0 5.08-2.42 8.7-7 11.5-4.58-2.8-7-6.42-7-11.5V6l7-3.75Z" stroke="currentColor" stroke-width="1.35"/>
+            <path d="m8 8.4 4 2.25 4-2.25M8 12.3 12 14.5l4-2.2M8 16.05 12 18.3l4-2.25" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span class="cc-shell__brand-copy">
+          <span class="cc-shell__brand-title">Crossover Culture</span>
+          <span class="cc-shell__brand-tag">Built to represent</span>
+        </span>
+      </a>
+
+      <nav class="cc-shell__nav" aria-label="Primary">
+        <div class="cc-shell__dropdown">
+          <a class="cc-shell__nav-item{% if page_handle == 'uniforms' %} is-active{% endif %}" href="{{ basketball_uniforms_url }}">
+            Uniforms
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="m4 6 4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </a>
+          <div class="cc-shell__dropdown-panel" role="menu">
+            <a class="cc-shell__dropdown-link" href="{{ reversible_jerseys_url }}">
+              <span class="cc-shell__dropdown-label">Reversible Jerseys</span>
+              <span class="cc-shell__dropdown-copy">Two looks. One standard.</span>
+            </a>
+            <a class="cc-shell__dropdown-link" href="{{ reversible_uniforms_url }}">
+              <span class="cc-shell__dropdown-label">Reversible Basketball Uniforms</span>
+              <span class="cc-shell__dropdown-copy">Home and away identity in one system.</span>
+            </a>
+            <a class="cc-shell__dropdown-link" href="{{ basketball_uniforms_url }}">
+              <span class="cc-shell__dropdown-label">Basketball Uniforms</span>
+              <span class="cc-shell__dropdown-copy">Game-day presence with a cleaner program standard.</span>
+            </a>
+            <a class="cc-shell__dropdown-link" href="{{ custom_uniform_url }}">
+              <span class="cc-shell__dropdown-label">Start Custom Uniform Order</span>
+              <span class="cc-shell__dropdown-copy">Start the uniform path built for full-program orders.</span>
+            </a>
+          </div>
+        </div>
+
+        <a class="cc-shell__nav-item{% if page_handle == 'shooting' %} is-active{% endif %}" href="{{ shooting_shirts_url }}">Shooting</a>
+        <a class="cc-shell__nav-item{% if page_handle == 'travel' %} is-active{% endif %}" href="{{ travel_gear_url }}">Travel</a>
+
+        <div class="cc-shell__dropdown">
+          <a class="cc-shell__nav-item{% if page_handle == 'apparel' %} is-active{% endif %}" href="{{ hoodies_fleece_url }}">
+            Apparel
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="m4 6 4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </a>
+          <div class="cc-shell__dropdown-panel" role="menu">
+            <a class="cc-shell__dropdown-link" href="{{ hoodies_fleece_url }}">
+              <span class="cc-shell__dropdown-label">Hoodies &amp; Fleece</span>
+              <span class="cc-shell__dropdown-copy">Warm-up, recover, and move through travel days with one look.</span>
+            </a>
+            <a class="cc-shell__dropdown-link" href="{{ practice_shorts_url }}">
+              <span class="cc-shell__dropdown-label">Practice Shorts</span>
+              <span class="cc-shell__dropdown-copy">Daily program essentials for repeat reps.</span>
+            </a>
+            <a class="cc-shell__dropdown-link" href="{{ base_layers_url }}">
+              <span class="cc-shell__dropdown-label">Base Layers</span>
+              <span class="cc-shell__dropdown-copy">A performance system built under the uniform.</span>
+            </a>
+          </div>
+        </div>
+
+        <a class="cc-shell__nav-item{% if page_handle == 'accessories' %} is-active{% endif %}" href="{{ accessories_url }}">Accessories</a>
+        <a class="cc-shell__nav-item{% if page_handle == 'process' %} is-active{% endif %}" href="{{ process_url }}">Our Process</a>
+        <a class="cc-shell__nav-item{% if page_handle == 'about' %} is-active{% endif %}" href="{{ about_url }}">About</a>
+      </nav>
+
+      <div class="cc-shell__header-actions">
+        <button class="cc-shell__menu-toggle" type="button" aria-expanded="false" aria-controls="cc-drawer-{{ section_id }}" data-cc-nav-toggle>
+          <span class="visually-hidden">Open menu</span>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <a class="cc-shell__icon-button" href="{{ routes.search_url }}">
+          <span class="visually-hidden">Search</span>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.6"/>
+            <path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </a>
+        <a class="cc-shell__icon-button" href="{{ routes.account_url }}">
+          <span class="visually-hidden">Account</span>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="12" cy="8.2" r="3.2" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M5.5 20c1.2-3.3 3.6-5 6.5-5s5.3 1.7 6.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </a>
+        <a class="cc-shell__icon-button" href="{{ routes.cart_url }}">
+          <span class="visually-hidden">Cart</span>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 6h15l-1.4 8.1H8L6 3H3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="10" cy="19" r="1.4" fill="currentColor"/>
+            <circle cx="18" cy="19" r="1.4" fill="currentColor"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="cc-shell__drawer-backdrop" data-cc-drawer-backdrop></div>
+  <aside class="cc-shell__drawer" id="cc-drawer-{{ section_id }}" aria-hidden="true" data-cc-drawer>
+    <div class="cc-shell__drawer-inner">
+      <div class="cc-shell__drawer-top">
+        <p class="cc-shell__drawer-title">Program Navigation</p>
+        <button class="cc-shell__drawer-close" type="button" data-cc-drawer-close>
+          <span class="visually-hidden">Close menu</span>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="cc-shell__drawer-grid">
+        <div class="cc-shell__drawer-group">
+          <p class="cc-shell__drawer-heading">Collections</p>
+          <a class="cc-shell__drawer-link" href="{{ reversible_jerseys_url }}"><span>Reversible Jerseys</span><span>01</span></a>
+          <a class="cc-shell__drawer-link" href="{{ reversible_uniforms_url }}"><span>Reversible Basketball Uniforms</span><span>02</span></a>
+          <a class="cc-shell__drawer-link" href="{{ basketball_uniforms_url }}"><span>Basketball Uniforms</span><span>03</span></a>
+          <a class="cc-shell__drawer-link" href="{{ shooting_shirts_url }}"><span>Shooting Shirts</span><span>04</span></a>
+          <a class="cc-shell__drawer-link" href="{{ travel_gear_url }}"><span>Travel Gear</span><span>05</span></a>
+          <a class="cc-shell__drawer-link" href="{{ hoodies_fleece_url }}"><span>Hoodies &amp; Fleece</span><span>06</span></a>
+          <a class="cc-shell__drawer-link" href="{{ practice_shorts_url }}"><span>Practice Shorts</span><span>07</span></a>
+          <a class="cc-shell__drawer-link" href="{{ accessories_url }}"><span>Accessories</span><span>08</span></a>
+          <a class="cc-shell__drawer-link" href="{{ base_layers_url }}"><span>Base Layers</span><span>09</span></a>
+        </div>
+
+        <div class="cc-shell__drawer-group">
+          <p class="cc-shell__drawer-heading">Custom Order Routes</p>
+          <a class="cc-shell__drawer-link" href="{{ custom_uniform_url }}"><span>Custom Uniform Orders</span><span>Go</span></a>
+          <a class="cc-shell__drawer-link" href="{{ custom_shooting_url }}"><span>Custom Shooting Shirt Orders</span><span>Go</span></a>
+          <a class="cc-shell__drawer-link" href="{{ custom_travel_url }}"><span>Custom Travel Gear Orders</span><span>Go</span></a>
+          <a class="cc-shell__drawer-link" href="{{ custom_polo_url }}"><span>Custom Polo Orders</span><span>Go</span></a>
+        </div>
+
+        <div class="cc-shell__drawer-group">
+          <p class="cc-shell__drawer-heading">Brand</p>
+          <a class="cc-shell__drawer-link" href="{{ process_url }}"><span>Our Process</span><span>Info</span></a>
+          <a class="cc-shell__drawer-link" href="{{ about_url }}"><span>About</span><span>Info</span></a>
+          <a class="cc-shell__drawer-link" href="{{ routes.cart_url }}"><span>Cart</span><span>{{ cart.item_count }}</span></a>
+        </div>
+      </div>
+    </div>
+  </aside>
+</header>

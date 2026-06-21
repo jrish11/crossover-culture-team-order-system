@@ -1,0 +1,391 @@
+{{ 'crossover-culture-storefront.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'crossover-culture-storefront.js' | asset_url }}" defer></script>
+
+{% liquid
+  assign reversible_jerseys_url = '/collections/reversible-jerseys'
+  assign reversible_uniforms_url = '/collections/reversible-basketball-uniforms'
+  assign basketball_uniforms_url = '/collections/basketball-uniforms'
+  assign hoodies_fleece_url = '/collections/hoodies-fleece'
+  assign shooting_shirts_url = '/collections/shooting-shirts'
+  assign practice_shorts_url = '/collections/practice-shorts'
+  assign accessories_url = '/collections/accessories'
+  assign base_layers_url = '/collections/base-layers'
+  assign travel_gear_url = '/collections/travel-gear'
+  assign custom_uniform_url = section.settings.custom_uniform_url | default: '/products/custom-team-uniform'
+  assign custom_shooting_url = section.settings.custom_shooting_url | default: '/products/custom-shooting-shirt'
+  assign custom_travel_url = section.settings.custom_travel_url | default: '/products/custom-travel-gear'
+  assign custom_polo_url = section.settings.custom_polo_url | default: '/products/custom-polo'
+  assign process_url = section.settings.process_url | default: '/pages/our-process'
+  assign about_url = section.settings.about_url | default: '/pages/about'
+  assign contact_url = section.settings.contact_url | default: '/pages/contact'
+  assign collection_blocks = section.blocks | where: 'type', 'collection_card'
+%}
+
+<div class="cc-shell" data-cc-shell-root>
+  <main class="cc-shell__page">
+    {% if section.settings.render_shell_chrome %}
+      {% render 'cc-store-header',
+        section_id: section.id,
+        page_handle: 'home',
+        announcement_text: section.settings.announcement_text,
+        minimum_order_text: section.settings.minimum_order_text,
+        support_text: section.settings.support_text,
+        reversible_jerseys_url: reversible_jerseys_url,
+        reversible_uniforms_url: reversible_uniforms_url,
+        basketball_uniforms_url: basketball_uniforms_url,
+        hoodies_fleece_url: hoodies_fleece_url,
+        shooting_shirts_url: shooting_shirts_url,
+        practice_shorts_url: practice_shorts_url,
+        accessories_url: accessories_url,
+        base_layers_url: base_layers_url,
+        travel_gear_url: travel_gear_url,
+        custom_uniform_url: custom_uniform_url,
+        custom_shooting_url: custom_shooting_url,
+        custom_travel_url: custom_travel_url,
+        custom_polo_url: custom_polo_url,
+        process_url: process_url,
+        about_url: about_url
+      %}
+    {% endif %}
+
+    <section class="cc-shell__hero cc-shell__hero--immersive">
+      <div class="cc-shell__container">
+        <div class="cc-shell__hero-world cc-shell__reveal" data-cc-reveal>
+          <div class="cc-shell__hero-scene">
+            {% if section.settings.hero_image != blank %}
+              {{ section.settings.hero_image | image_url: width: 2800 | image_tag: class: 'cc-shell__hero-scene-image', loading: 'eager', widths: '900, 1400, 1800, 2200, 2800', sizes: '100vw', alt: section.settings.hero_title }}
+            {% elsif collection_blocks.first.settings.feature_image != blank %}
+              {{ collection_blocks.first.settings.feature_image | image_url: width: 2800 | image_tag: class: 'cc-shell__hero-scene-image', loading: 'eager', widths: '900, 1400, 1800, 2200, 2800', sizes: '100vw', alt: section.settings.hero_title }}
+            {% else %}
+              <div class="cc-shell__hero-fallback" aria-hidden="true">
+                <svg viewBox="0 0 120 120" fill="none">
+                  <rect x="18" y="14" width="84" height="92" stroke="currentColor" stroke-width="4"/>
+                  <path d="m30 82 16-18 14 14 14-11 16 19" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="45" cy="40" r="9" fill="currentColor"/>
+                </svg>
+              </div>
+            {% endif %}
+
+            <div class="cc-shell__hero-scene-overlay">
+              {% if section.settings.show_hero_copy %}
+                <div class="cc-shell__hero-copy cc-shell__hero-copy--floating">
+                  <p class="cc-shell__eyebrow">{{ section.settings.hero_kicker }}</p>
+                  <h1 class="cc-shell__headline">{{ section.settings.hero_title }}</h1>
+                  <p class="cc-shell__hero-scene-copy">{{ section.settings.hero_overlay_copy }}</p>
+                  <div class="cc-shell__cta-row">
+                    <a class="cc-shell__cta" href="{{ custom_uniform_url }}">{{ section.settings.primary_cta_label }}</a>
+                  </div>
+                </div>
+              {% else %}
+                <div class="cc-shell__hero-copy cc-shell__hero-copy--floating cc-shell__hero-copy--floating-minimal">
+                  <div class="cc-shell__cta-row">
+                    <a class="cc-shell__cta" href="{{ custom_uniform_url }}">{{ section.settings.primary_cta_label }}</a>
+                  </div>
+                </div>
+              {% endif %}
+
+              <div class="cc-shell__hero-hotspots" aria-label="Shop collections from the hero scene">
+                {% for block in collection_blocks %}
+                  {% assign linked_collection = collections[block.settings.collection_handle] %}
+                  {% assign card_url = block.settings.custom_url | default: linked_collection.url | default: routes.root_url %}
+                  <a
+                    class="cc-shell__hero-hotspot cc-shell__hero-hotspot--{{ block.settings.anchor }}"
+                    href="{{ card_url }}"
+                    style="--cc-hotspot-x: {{ block.settings.desktop_x }}%; --cc-hotspot-y: {{ block.settings.desktop_y }}%;"
+                    {{ block.shopify_attributes }}
+                  >
+                    <span class="cc-shell__hero-hotspot-pin" aria-hidden="true">+</span>
+                    <span class="cc-shell__hero-hotspot-copy">
+                      <span class="cc-shell__hero-hotspot-index">{{ block.settings.index_label }}</span>
+                      <span class="cc-shell__hero-hotspot-title">{{ block.settings.title }}</span>
+                    </span>
+                  </a>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cc-shell__utility-band">
+      <div class="cc-shell__container">
+        <div class="cc-shell__utility-grid">
+          <div class="cc-shell__utility-card">
+            <p class="cc-shell__utility-label">Minimums as low as 6</p>
+            <p class="cc-shell__stage-copytext">Built for teams of every size, from first drop to full program rollout.</p>
+          </div>
+          <div class="cc-shell__utility-card">
+            <p class="cc-shell__utility-label">Premium quality</p>
+            <p class="cc-shell__stage-copytext">Elite materials and sharper detailing built to hold their look all season.</p>
+          </div>
+          <div class="cc-shell__utility-card">
+            <p class="cc-shell__utility-label">Fast mockups</p>
+            <p class="cc-shell__stage-copytext">See the direction quickly and tighten the program standard with speed.</p>
+          </div>
+          <div class="cc-shell__utility-card">
+            <p class="cc-shell__utility-label">Dedicated support</p>
+            <p class="cc-shell__stage-copytext">Real support for every phase, from artwork to approval to reorder.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cc-shell__section" id="collection-world">
+      <div class="cc-shell__container">
+        <div class="cc-shell__section-head">
+          <div class="cc-shell__reveal" data-cc-reveal>
+            <p class="cc-shell__eyebrow">{{ section.settings.collection_kicker }}</p>
+            <h2 class="cc-shell__section-title">{{ section.settings.collection_title }}</h2>
+          </div>
+          <p class="cc-shell__body-copy cc-shell__reveal" data-cc-reveal>{{ section.settings.collection_copy }}</p>
+        </div>
+
+        <div class="cc-shell__collection-grid">
+          {% for block in collection_blocks %}
+            {% assign linked_collection = collections[block.settings.collection_handle] %}
+            {% assign image_source = block.settings.feature_image %}
+            {% if image_source == blank and linked_collection != blank and linked_collection.image != blank %}
+              {% assign image_source = linked_collection.image %}
+            {% endif %}
+            {% assign card_url = block.settings.custom_url | default: linked_collection.url | default: routes.root_url %}
+            {% assign size_class = block.settings.card_size %}
+            {% assign card_index = block.settings.index_label %}
+            {% render 'cc-collection-card',
+              block_shopify_attributes: block.shopify_attributes,
+              card_size: size_class,
+              card_index: card_index,
+              card_kicker: block.settings.kicker,
+              card_title: block.settings.title,
+              card_copy: block.settings.copy,
+              card_url: card_url,
+              card_image: image_source
+            %}
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+
+    <section class="cc-shell__section">
+      <div class="cc-shell__container">
+        <div class="cc-shell__story-layout">
+          <div class="cc-shell__story-copy cc-shell__reveal" data-cc-reveal>
+            <div>
+              <p class="cc-shell__eyebrow">{{ section.settings.story_kicker }}</p>
+              <h2 class="cc-shell__story-title">{{ section.settings.story_title }}</h2>
+            </div>
+            <p class="cc-shell__body-copy">{{ section.settings.story_copy }}</p>
+
+            <div class="cc-shell__detail-grid">
+              <article class="cc-shell__detail-card">
+                <p class="cc-shell__detail-title">Identity first</p>
+                <p class="cc-shell__detail-copy">Uniforms frame game-day identity, while travel and training pieces extend the same program standard off the floor.</p>
+              </article>
+              <article class="cc-shell__detail-card">
+                <p class="cc-shell__detail-title">One controlled system</p>
+                <p class="cc-shell__detail-copy">Uniforms, shooting, travel, staff gear, and everyday essentials all speak in one clear visual language.</p>
+              </article>
+              <article class="cc-shell__detail-card">
+                <p class="cc-shell__detail-title">Ready to integrate</p>
+                <p class="cc-shell__detail-copy">Built to move cleanly into Shopify with responsive structure, strong hierarchy, and clear collection routing.</p>
+              </article>
+            </div>
+
+            <a class="cc-shell__collection-link" href="{{ process_url }}">See the process</a>
+          </div>
+
+          <div class="cc-shell__story-visual cc-shell__reveal" data-cc-reveal>
+            {% if section.settings.story_image != blank %}
+              {{ section.settings.story_image | image_url: width: 2000 | image_tag: class: 'cc-shell__story-image', loading: 'lazy', widths: '900, 1200, 1600, 2000', sizes: '(min-width: 1180px) 48vw, 100vw', alt: section.settings.story_title }}
+            {% elsif collection_blocks.first.settings.feature_image != blank %}
+              {{ collection_blocks.first.settings.feature_image | image_url: width: 2000 | image_tag: class: 'cc-shell__story-image', loading: 'lazy', widths: '900, 1200, 1600, 2000', sizes: '(min-width: 1180px) 48vw, 100vw', alt: section.settings.story_title }}
+            {% else %}
+              <div class="cc-shell__story-fallback" aria-hidden="true">
+                <svg viewBox="0 0 120 120" fill="none">
+                  <rect x="18" y="14" width="84" height="92" stroke="currentColor" stroke-width="4"/>
+                  <path d="m30 82 16-18 14 14 14-11 16 19" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="45" cy="40" r="9" fill="currentColor"/>
+                </svg>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cc-shell__section">
+      <div class="cc-shell__container">
+        <div class="cc-shell__support-layout">
+          <article class="cc-shell__support-card cc-shell__reveal" data-cc-reveal>
+            <div>
+              <p class="cc-shell__eyebrow">{{ section.settings.route_kicker }}</p>
+              <h2 class="cc-shell__story-title">{{ section.settings.route_title }}</h2>
+            </div>
+            <p class="cc-shell__body-copy">{{ section.settings.route_copy }}</p>
+            <p class="cc-shell__support-copy">Pick the right starting point for uniforms, shooting gear, travel, or staff apparel while keeping the brand world consistent from first click to final order.</p>
+          </article>
+
+          <div class="cc-shell__route-grid">
+            <article class="cc-shell__route-card cc-shell__reveal" data-cc-reveal>
+              <span class="cc-shell__route-kicker">01</span>
+              <h3 class="cc-shell__route-title">Custom Uniform Orders</h3>
+              <p class="cc-shell__route-copy">Start the main team uniform path for reversible sets and full basketball kits.</p>
+              <a class="cc-shell__route-link" href="{{ custom_uniform_url }}">
+                Start uniform order
+                <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </article>
+
+            <article class="cc-shell__route-card cc-shell__reveal" data-cc-reveal>
+              <span class="cc-shell__route-kicker">02</span>
+              <h3 class="cc-shell__route-title">Shooting Shirt Orders</h3>
+              <p class="cc-shell__route-copy">Move from the collection story into the shooting-shirt order path built for prep and warmup layers.</p>
+              <a class="cc-shell__route-link" href="{{ custom_shooting_url }}">
+                Start shooting order
+                <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </article>
+
+            <article class="cc-shell__route-card cc-shell__reveal" data-cc-reveal>
+              <span class="cc-shell__route-kicker">03</span>
+              <h3 class="cc-shell__route-title">Travel Gear Orders</h3>
+              <p class="cc-shell__route-copy">Carry the same team standard into arrival, recovery, and off-court presence.</p>
+              <a class="cc-shell__route-link" href="{{ custom_travel_url }}">
+                Start travel order
+                <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </article>
+
+            <article class="cc-shell__route-card cc-shell__reveal" data-cc-reveal>
+              <span class="cc-shell__route-kicker">04</span>
+              <h3 class="cc-shell__route-title">Custom Polo Orders</h3>
+              <p class="cc-shell__route-copy">Give coaches and staff the same controlled standard with a dedicated polo order path.</p>
+              <a class="cc-shell__route-link" href="{{ custom_polo_url }}">
+                Start polo order
+                <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {% if section.settings.render_shell_chrome %}
+      {% render 'cc-store-footer',
+        section_id: section.id,
+        footer_kicker: section.settings.footer_kicker,
+        footer_title: section.settings.footer_title,
+        footer_copy: section.settings.footer_copy,
+        reversible_jerseys_url: reversible_jerseys_url,
+        reversible_uniforms_url: reversible_uniforms_url,
+        basketball_uniforms_url: basketball_uniforms_url,
+        hoodies_fleece_url: hoodies_fleece_url,
+        shooting_shirts_url: shooting_shirts_url,
+        practice_shorts_url: practice_shorts_url,
+        accessories_url: accessories_url,
+        base_layers_url: base_layers_url,
+        travel_gear_url: travel_gear_url,
+        custom_uniform_url: custom_uniform_url,
+        custom_shooting_url: custom_shooting_url,
+        custom_travel_url: custom_travel_url,
+        custom_polo_url: custom_polo_url,
+        process_url: process_url,
+        about_url: about_url,
+        contact_url: contact_url
+      %}
+    {% endif %}
+  </main>
+</div>
+
+{% schema %}
+{
+  "name": "CC Homepage Shell",
+  "settings": [
+    { "type": "checkbox", "id": "render_shell_chrome", "label": "Render header and footer chrome", "default": true },
+    { "type": "checkbox", "id": "show_hero_copy", "label": "Show headline and hero copy over the scene", "default": true },
+    { "type": "text", "id": "announcement_text", "label": "Announcement text", "default": "Premium custom teamwear. Built to represent." },
+    { "type": "text", "id": "minimum_order_text", "label": "Minimum order text", "default": "Minimum order: 6 pieces per style" },
+    { "type": "text", "id": "support_text", "label": "Support text", "default": "Expert support. Fast mockups." },
+    { "type": "text", "id": "hero_kicker", "label": "Hero kicker", "default": "Team identity is everything." },
+    { "type": "text", "id": "hero_title", "label": "Hero title", "default": "Built for programs that show up dressed." },
+    { "type": "textarea", "id": "hero_copy", "label": "Hero copy", "default": "Crossover Culture builds the visual system around a program: reversible sets, basketball uniforms, shooting layers, travel pieces, and daily essentials that carry one standard from arrival to tip." },
+    { "type": "text", "id": "primary_cta_label", "label": "Primary CTA label", "default": "Outfit your program" },
+    { "type": "text", "id": "secondary_cta_label", "label": "Secondary CTA label", "default": "Explore collections" },
+    { "type": "image_picker", "id": "hero_image", "label": "Hero image" },
+    { "type": "text", "id": "hero_overlay_title", "label": "Hero overlay title", "default": "Premium teamwear built to represent." },
+    { "type": "textarea", "id": "hero_overlay_copy", "label": "Hero overlay copy", "default": "Premium custom teamwear built around uniforms, preparation, travel, and the details that make a program look complete." },
+    { "type": "text", "id": "collection_kicker", "label": "Collections kicker", "default": "Shop collections" },
+    { "type": "text", "id": "collection_title", "label": "Collections title", "default": "One world. Every collection in view." },
+    { "type": "textarea", "id": "collection_copy", "label": "Collections copy", "default": "Uniforms frame game-day identity. Shooting layers lock in preparation. Travel gear handles arrival and off-court presence. Base layers, fleece, shorts, and accessories fill out the daily program standard." },
+    { "type": "text", "id": "story_kicker", "label": "Story kicker", "default": "Program standard" },
+    { "type": "text", "id": "story_title", "label": "Story title", "default": "Designed around how teams arrive." },
+    { "type": "textarea", "id": "story_copy", "label": "Story copy", "default": "This storefront is built to merchandise the brand first, then move teams cleanly into the right order path for uniforms, shooting, travel, and staff gear." },
+    { "type": "image_picker", "id": "story_image", "label": "Story image" },
+    { "type": "text", "id": "route_kicker", "label": "Routes kicker", "default": "Order paths" },
+    { "type": "text", "id": "route_title", "label": "Routes title", "default": "Start the right order for the program." },
+    { "type": "textarea", "id": "route_copy", "label": "Routes copy", "default": "The storefront shell elevates discovery, then directs teams into the right order path for each custom category." },
+    { "type": "text", "id": "footer_kicker", "label": "Footer kicker", "default": "Ready to build the program standard?" },
+    { "type": "text", "id": "footer_title", "label": "Footer title", "default": "Stay close to new drops, teamwear launches, and ordering updates." },
+    { "type": "textarea", "id": "footer_copy", "label": "Footer copy", "default": "Use this footer as the support and newsletter anchor for the storefront, with a premium tone and clean route into every major collection." },
+    { "type": "url", "id": "custom_uniform_url", "label": "Custom uniform product URL" },
+    { "type": "url", "id": "custom_shooting_url", "label": "Custom shooting shirt product URL" },
+    { "type": "url", "id": "custom_travel_url", "label": "Custom travel gear product URL" },
+    { "type": "url", "id": "custom_polo_url", "label": "Custom polo product URL" },
+    { "type": "url", "id": "process_url", "label": "Our process URL" },
+    { "type": "url", "id": "about_url", "label": "About URL" },
+    { "type": "url", "id": "contact_url", "label": "Contact URL" }
+  ],
+  "blocks": [
+    {
+      "type": "collection_card",
+      "name": "Collection hotspot",
+      "limit": 9,
+      "settings": [
+        { "type": "text", "id": "index_label", "label": "Index label", "default": "01" },
+        { "type": "text", "id": "kicker", "label": "Kicker", "default": "Collection" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Reversible Jerseys" },
+        { "type": "textarea", "id": "copy", "label": "Copy", "default": "Two looks. One standard." },
+        { "type": "text", "id": "collection_handle", "label": "Collection handle" },
+        { "type": "url", "id": "custom_url", "label": "Override URL" },
+        {
+          "type": "select",
+          "id": "card_size",
+          "label": "Collection grid card size",
+          "default": "standard",
+          "options": [
+            { "value": "featured", "label": "Featured" },
+            { "value": "tall", "label": "Tall" },
+            { "value": "standard", "label": "Standard" }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "anchor",
+          "label": "Hotspot text anchor",
+          "default": "left",
+          "options": [
+            { "value": "left", "label": "Text to the left of pin" },
+            { "value": "right", "label": "Text to the right of pin" }
+          ]
+        },
+        { "type": "range", "id": "desktop_x", "min": 3, "max": 97, "step": 1, "label": "Hero hotspot X position", "default": 20, "unit": "%" },
+        { "type": "range", "id": "desktop_y", "min": 8, "max": 92, "step": 1, "label": "Hero hotspot Y position", "default": 30, "unit": "%" },
+        { "type": "image_picker", "id": "feature_image", "label": "Feature image" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "CC Homepage Shell"
+    }
+  ]
+}
+{% endschema %}

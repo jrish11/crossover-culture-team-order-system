@@ -1,0 +1,287 @@
+{{ 'crossover-culture-storefront.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'crossover-culture-storefront.js' | asset_url }}" defer></script>
+
+{% liquid
+  assign reversible_jerseys_url = '/collections/reversible-jerseys'
+  assign reversible_uniforms_url = '/collections/reversible-basketball-uniforms'
+  assign basketball_uniforms_url = '/collections/basketball-uniforms'
+  assign hoodies_fleece_url = '/collections/hoodies-fleece'
+  assign shooting_shirts_url = '/collections/shooting-shirts'
+  assign practice_shorts_url = '/collections/practice-shorts'
+  assign accessories_url = '/collections/accessories'
+  assign base_layers_url = '/collections/base-layers'
+  assign travel_gear_url = '/collections/travel-gear'
+  assign custom_uniform_url = section.settings.custom_uniform_url | default: '/products/custom-team-uniform'
+  assign custom_shooting_url = section.settings.custom_shooting_url | default: '/products/custom-shooting-shirt'
+  assign custom_travel_url = section.settings.custom_travel_url | default: '/products/custom-travel-gear'
+  assign custom_polo_url = section.settings.custom_polo_url | default: '/products/custom-polo'
+  assign process_url = section.settings.process_url | default: '/pages/our-process'
+  assign about_url = section.settings.about_url | default: '/pages/about'
+  assign contact_url = section.settings.contact_url | default: '/pages/contact'
+  assign selected_variant = product.selected_or_first_available_variant
+  assign product_collection = product.collections.first
+  assign title_downcase = product.title | downcase
+  assign gallery_featured_image = product.featured_image | default: product.images.first
+  assign featured_alt = gallery_featured_image.alt | default: product.title
+  assign recommend_route_url = custom_uniform_url
+  assign recommend_route_label = 'Start custom uniform order'
+  assign recommend_route_copy = 'Need a full team version of this piece? Start with the custom uniform order path.'
+
+  if title_downcase contains 'shooting'
+    assign recommend_route_url = custom_shooting_url
+    assign recommend_route_label = 'Start custom shooting order'
+    assign recommend_route_copy = 'Need this customized for a full shooting program? Start with the shooting-shirt order path.'
+  elsif title_downcase contains 'travel' or title_downcase contains 'crew' or title_downcase contains 'zip'
+    assign recommend_route_url = custom_travel_url
+    assign recommend_route_label = 'Start custom travel order'
+    assign recommend_route_copy = 'Need this built into the team travel package? Start with the travel-gear order path.'
+  elsif title_downcase contains 'polo'
+    assign recommend_route_url = custom_polo_url
+    assign recommend_route_label = 'Start custom polo order'
+    assign recommend_route_copy = 'Need a coordinated coach or staff version? Start with the custom polo order path.'
+  endif
+%}
+
+<div class="cc-shell" data-cc-shell-root>
+  <main class="cc-shell__page">
+    {% if section.settings.render_shell_chrome %}
+      {% render 'cc-store-header',
+        section_id: section.id,
+        page_handle: 'product',
+        announcement_text: section.settings.announcement_text,
+        minimum_order_text: section.settings.minimum_order_text,
+        support_text: section.settings.support_text,
+        reversible_jerseys_url: reversible_jerseys_url,
+        reversible_uniforms_url: reversible_uniforms_url,
+        basketball_uniforms_url: basketball_uniforms_url,
+        hoodies_fleece_url: hoodies_fleece_url,
+        shooting_shirts_url: shooting_shirts_url,
+        practice_shorts_url: practice_shorts_url,
+        accessories_url: accessories_url,
+        base_layers_url: base_layers_url,
+        travel_gear_url: travel_gear_url,
+        custom_uniform_url: custom_uniform_url,
+        custom_shooting_url: custom_shooting_url,
+        custom_travel_url: custom_travel_url,
+        custom_polo_url: custom_polo_url,
+        process_url: process_url,
+        about_url: about_url
+      %}
+    {% endif %}
+
+    <section class="cc-shell__container cc-shell__product-shell" data-cc-product-root data-money-format="{{ shop.money_format | strip_html | escape }}">
+      <div class="cc-shell__product-gallery cc-shell__reveal" data-cc-reveal data-cc-gallery>
+        <div class="cc-shell__breadcrumbs">
+          <a class="cc-shell__breadcrumb-link" href="{{ routes.root_url }}">Home</a>
+          {% if product_collection %}
+            <a class="cc-shell__breadcrumb-link" href="{{ product_collection.url }}">{{ product_collection.title }}</a>
+          {% endif %}
+          <span class="cc-shell__breadcrumb-current">{{ product.title }}</span>
+        </div>
+
+        <div class="cc-shell__product-gallery-main">
+          {% if gallery_featured_image != blank %}
+            <img
+              data-cc-gallery-main
+              class="cc-shell__product-gallery-main-image"
+              src="{{ gallery_featured_image | image_url: width: 2200 }}"
+              alt="{{ featured_alt | escape }}"
+              loading="eager"
+              width="{{ gallery_featured_image.width }}"
+              height="{{ gallery_featured_image.height }}"
+            >
+          {% else %}
+            <div class="cc-shell__product-fallback" aria-hidden="true">
+              <svg viewBox="0 0 120 120" fill="none">
+                <rect x="18" y="14" width="84" height="92" stroke="currentColor" stroke-width="4"/>
+                <path d="m30 82 16-18 14 14 14-11 16 19" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="45" cy="40" r="9" fill="currentColor"/>
+              </svg>
+            </div>
+          {% endif %}
+        </div>
+
+        {% if product.images.size > 1 %}
+          <div class="cc-shell__product-thumbs">
+            {% for image in product.images limit: 4 %}
+              {% assign thumb_alt = image.alt | default: product.title %}
+              <button
+                class="cc-shell__product-thumb{% if image.id == gallery_featured_image.id %} is-active{% endif %}"
+                type="button"
+                data-cc-gallery-thumb
+                data-image-src="{{ image | image_url: width: 2200 }}"
+                data-image-alt="{{ thumb_alt | escape }}"
+                aria-pressed="{% if image.id == gallery_featured_image.id %}true{% else %}false{% endif %}"
+              >
+                {{ image | image_url: width: 540 | image_tag: loading: 'lazy', widths: '240, 420, 540', sizes: '(min-width: 1180px) 13vw, 24vw', alt: thumb_alt }}
+              </button>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="cc-shell__product-copy cc-shell__reveal" data-cc-reveal>
+        <div class="cc-shell__product-header">
+          <p class="cc-shell__product-kicker">Program essential</p>
+          <h1 class="cc-shell__product-title">{{ product.title }}</h1>
+          <div class="cc-shell__product-kicker-row">
+            <p class="cc-shell__product-price" data-cc-price>{{ selected_variant.price | money }}</p>
+            <p class="cc-shell__product-price" data-cc-compare-price{% if selected_variant.compare_at_price <= selected_variant.price or selected_variant.compare_at_price == blank %} hidden{% endif %}>
+              {{ selected_variant.compare_at_price | money }}
+            </p>
+          </div>
+          <p class="cc-shell__product-meta-copy">
+            {% if product.description != blank %}
+              {{ product.description | strip_html | truncate: 220 }}
+            {% else %}
+              A cleaner product presentation for core team pieces, everyday program gear, and stocked merch.
+            {% endif %}
+          </p>
+        </div>
+
+        <div class="cc-shell__product-meta-row">
+          {% if product.vendor != blank %}
+            <span>{{ product.vendor }}</span>
+          {% endif %}
+          {% if product.type != blank %}
+            <span>{{ product.type }}</span>
+          {% endif %}
+          <span data-cc-stock-status>{% if selected_variant.available %}Ready to ship{% else %}Currently sold out{% endif %}</span>
+        </div>
+
+        <div class="cc-shell__product-meta">
+          <p class="cc-shell__product-meta-label">Where this sits in the program</p>
+          <p class="cc-shell__product-meta-copy">{{ section.settings.positioning_copy }}</p>
+        </div>
+
+        <form class="cc-shell__product-form" method="post" action="{{ routes.cart_add_url }}">
+          <input type="hidden" name="id" value="{{ selected_variant.id }}" data-cc-variant-id>
+
+          {% for option in product.options_with_values %}
+            <div class="cc-shell__field">
+              <label class="cc-shell__field-label" for="Option-{{ section.id }}-{{ forloop.index0 }}">{{ option.name }}</label>
+              <select class="cc-shell__variant-select" id="Option-{{ section.id }}-{{ forloop.index0 }}" data-cc-option-field>
+                {% for value in option.values %}
+                  <option value="{{ value | escape }}"{% if option.selected_value == value %} selected{% endif %}>{{ value }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          {% endfor %}
+
+          <div class="cc-shell__field-row">
+            <div class="cc-shell__field">
+              <label class="cc-shell__field-label" for="Quantity-{{ section.id }}">Quantity</label>
+              <input id="Quantity-{{ section.id }}" class="cc-shell__quantity-input" type="number" name="quantity" value="1" min="1">
+            </div>
+          </div>
+
+          <div class="cc-shell__product-submit-row">
+            <button
+              class="cc-shell__product-submit"
+              type="submit"
+              data-cc-add-to-cart
+              data-default-label="Add to cart"
+              data-sold-out-label="Sold out"
+              data-unavailable-label="Unavailable"
+              {% unless selected_variant.available %}disabled{% endunless %}
+            >
+              {% if selected_variant.available %}Add to cart{% else %}Sold out{% endif %}
+            </button>
+            <a class="cc-shell__product-link" href="{{ recommend_route_url }}">{{ recommend_route_label }}</a>
+          </div>
+        </form>
+
+        <div class="cc-shell__product-panel">
+          <p class="cc-shell__product-meta-label">Team order available</p>
+          <p class="cc-shell__product-detail-copy">{{ recommend_route_copy }}</p>
+        </div>
+
+        <div class="cc-shell__look-grid">
+          <article class="cc-shell__look-card">
+            {% if gallery_featured_image != blank %}
+              {{ gallery_featured_image | image_url: width: 1200 | image_tag: class: 'cc-shell__hero-image', loading: 'lazy', widths: '420, 720, 960, 1200', sizes: '(min-width: 1180px) 22vw, 100vw', alt: product.title }}
+            {% else %}
+              <div class="cc-shell__card-fallback" aria-hidden="true">
+                <svg viewBox="0 0 72 72" fill="none">
+                  <rect x="8" y="10" width="56" height="52" stroke="currentColor" stroke-width="3"/>
+                  <path d="m18 47 10-12 8 8 9-7 9 11" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="27" cy="26" r="5" fill="currentColor"/>
+                </svg>
+              </div>
+            {% endif %}
+            <div class="cc-shell__look-copy">
+              <span class="cc-shell__route-kicker">Merchandising</span>
+              <h2 class="cc-shell__look-title">Stronger product framing</h2>
+              <p class="cc-shell__stage-copytext">This shell gives standard products a cleaner hierarchy, clearer CTA, and a consistent brand world.</p>
+            </div>
+          </article>
+
+          <article class="cc-shell__detail-card">
+            <p class="cc-shell__detail-title">Collection discovery</p>
+            <p class="cc-shell__detail-copy">The page keeps users close to the broader collection strategy instead of trapping them in a flat product layout.</p>
+          </article>
+
+          <article class="cc-shell__detail-card">
+            <p class="cc-shell__detail-title">Program continuity</p>
+            <p class="cc-shell__detail-copy">Single-product shopping stays clean, while teams can still move into the right full-program order path when customization is needed.</p>
+          </article>
+        </div>
+      </div>
+
+      <script type="application/json" data-cc-product-json>{{ product | json }}</script>
+    </section>
+
+    {% if section.settings.render_shell_chrome %}
+      {% render 'cc-store-footer',
+        section_id: section.id,
+        footer_kicker: section.settings.footer_kicker,
+        footer_title: section.settings.footer_title,
+        footer_copy: section.settings.footer_copy,
+        reversible_jerseys_url: reversible_jerseys_url,
+        reversible_uniforms_url: reversible_uniforms_url,
+        basketball_uniforms_url: basketball_uniforms_url,
+        hoodies_fleece_url: hoodies_fleece_url,
+        shooting_shirts_url: shooting_shirts_url,
+        practice_shorts_url: practice_shorts_url,
+        accessories_url: accessories_url,
+        base_layers_url: base_layers_url,
+        travel_gear_url: travel_gear_url,
+        custom_uniform_url: custom_uniform_url,
+        custom_shooting_url: custom_shooting_url,
+        custom_travel_url: custom_travel_url,
+        custom_polo_url: custom_polo_url,
+        process_url: process_url,
+        about_url: about_url,
+        contact_url: contact_url
+      %}
+    {% endif %}
+  </main>
+</div>
+
+{% schema %}
+{
+  "name": "CC Product Shell",
+  "settings": [
+    { "type": "checkbox", "id": "render_shell_chrome", "label": "Render header and footer chrome", "default": true },
+    { "type": "text", "id": "announcement_text", "label": "Announcement text", "default": "Premium custom teamwear. Built to represent." },
+    { "type": "text", "id": "minimum_order_text", "label": "Minimum order text", "default": "Minimum order: 6 pieces per style" },
+    { "type": "text", "id": "support_text", "label": "Support text", "default": "Expert support. Fast mockups." },
+    { "type": "textarea", "id": "positioning_copy", "label": "Product positioning copy", "default": "Use this product shell for stocked and standard store products that still need a premium basketball culture presentation." },
+    { "type": "text", "id": "footer_kicker", "label": "Footer kicker", "default": "Ready to build the program standard?" },
+    { "type": "text", "id": "footer_title", "label": "Footer title", "default": "Stay close to new drops, teamwear launches, and ordering updates." },
+    { "type": "textarea", "id": "footer_copy", "label": "Footer copy", "default": "This footer supports the product shell with stronger brand presence, support structure, and collection access." },
+    { "type": "url", "id": "custom_uniform_url", "label": "Custom uniform product URL" },
+    { "type": "url", "id": "custom_shooting_url", "label": "Custom shooting shirt product URL" },
+    { "type": "url", "id": "custom_travel_url", "label": "Custom travel gear product URL" },
+    { "type": "url", "id": "custom_polo_url", "label": "Custom polo product URL" },
+    { "type": "url", "id": "process_url", "label": "Our process URL" },
+    { "type": "url", "id": "about_url", "label": "About URL" },
+    { "type": "url", "id": "contact_url", "label": "Contact URL" }
+  ],
+  "presets": [
+    {
+      "name": "CC Product Shell"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,20 @@
+{
+  "sections": {
+    "main": {
+      "type": "cc-product-shell",
+      "settings": {
+        "render_shell_chrome": true,
+        "announcement_text": "Premium custom teamwear. Built to represent.",
+        "minimum_order_text": "Minimum order: 6 pieces per style",
+        "support_text": "Expert support. Fast mockups.",
+        "positioning_copy": "Use this product shell for stocked and standard store products that still need a premium basketball culture presentation.",
+        "footer_kicker": "Ready to build the program standard?",
+        "footer_title": "Stay close to new drops, teamwear launches, and ordering updates.",
+        "footer_copy": "This footer supports the product shell with stronger brand presence, support structure, and collection access."
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

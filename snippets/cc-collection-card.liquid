@@ -1,0 +1,22 @@
+<a class="cc-shell__collection-card{% if card_size == 'featured' %} cc-shell__collection-card--featured{% elsif card_size == 'tall' %} cc-shell__collection-card--tall{% endif %}" href="{{ card_url }}" {{ block_shopify_attributes }}>
+  <div class="cc-shell__card-image">
+    {% if card_image != blank %}
+      {{ card_image | image_url: width: 1400 | image_tag: class: 'cc-shell__card-image-media', loading: 'lazy', widths: '420, 720, 960, 1200, 1400', sizes: '(min-width: 1180px) 33vw, (min-width: 740px) 50vw, 100vw', alt: card_title }}
+    {% else %}
+      <div class="cc-shell__card-fallback" aria-hidden="true">
+        <svg viewBox="0 0 72 72" fill="none">
+          <rect x="8" y="10" width="56" height="52" stroke="currentColor" stroke-width="3"/>
+          <path d="m18 47 10-12 8 8 9-7 9 11" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="27" cy="26" r="5" fill="currentColor"/>
+        </svg>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="cc-shell__card-content">
+    <span class="cc-shell__card-index">{{ card_index }}</span>
+    <p class="cc-shell__card-eyebrow">{{ card_kicker }}</p>
+    <h3 class="cc-shell__collection-title">{{ card_title }}</h3>
+    <p class="cc-shell__card-copy">{{ card_copy }}</p>
+  </div>
+</a>

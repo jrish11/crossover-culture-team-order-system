@@ -1,0 +1,20 @@
+{
+  "sections": {
+    "main": {
+      "type": "cc-collection-shell",
+      "settings": {
+        "render_shell_chrome": true,
+        "announcement_text": "Premium custom teamwear. Built to represent.",
+        "minimum_order_text": "Minimum order: 6 pieces per style",
+        "support_text": "Expert support. Fast mockups.",
+        "products_per_page": 12,
+        "footer_kicker": "Ready to build the program standard?",
+        "footer_title": "Stay close to new drops, teamwear launches, and ordering updates.",
+        "footer_copy": "This footer keeps the collection experience structured, intentional, and closely tied to the brand world."
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

@@ -1,0 +1,93 @@
+<footer class="cc-shell__footer">
+  <div class="cc-shell__container">
+    <div class="cc-shell__footer-layout">
+      <div class="cc-shell__footer-panel">
+        <p class="cc-shell__eyebrow">{{ footer_kicker }}</p>
+        <h2 class="cc-shell__footer-title">{{ footer_title }}</h2>
+        <p class="cc-shell__newsletter-copy">{{ footer_copy }}</p>
+
+        {% form 'customer', class: 'cc-shell__newsletter-form' %}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <label class="visually-hidden" for="NewsletterEmail-{{ section_id }}">Email address</label>
+          <input
+            id="NewsletterEmail-{{ section_id }}"
+            class="cc-shell__newsletter-input"
+            type="email"
+            name="contact[email]"
+            autocomplete="email"
+            placeholder="Email address"
+            required
+          >
+          <button class="cc-shell__newsletter-submit" type="submit">Join the list</button>
+        {% endform %}
+      </div>
+
+      <div class="cc-shell__footer-panel">
+        <div class="cc-shell__footer-meta">
+          <div>
+            <p class="cc-shell__footer-heading">Minimums</p>
+            <p class="cc-shell__footer-copy">Programs can start at six pieces per style.</p>
+          </div>
+          <div>
+            <p class="cc-shell__footer-heading">Support</p>
+            <p class="cc-shell__footer-copy">Real design support, mockups, and order guidance from start to finish.</p>
+          </div>
+          <div>
+            <p class="cc-shell__footer-heading">Program Fit</p>
+            <p class="cc-shell__footer-copy">Collections cover identity, preparation, travel, base layers, and everyday essentials.</p>
+          </div>
+          <div>
+            <p class="cc-shell__footer-heading">Custom Routes</p>
+            <p class="cc-shell__footer-copy">Uniforms, shooting shirts, travel gear, and staff polos each have a dedicated order path.</p>
+          </div>
+        </div>
+
+        <div class="cc-shell__footer-lists">
+          <div class="cc-shell__footer-list">
+            <p class="cc-shell__footer-heading">Collections</p>
+            <a class="cc-shell__footer-link" href="{{ reversible_jerseys_url }}">Reversible Jerseys</a>
+            <a class="cc-shell__footer-link" href="{{ reversible_uniforms_url }}">Reversible Basketball Uniforms</a>
+            <a class="cc-shell__footer-link" href="{{ basketball_uniforms_url }}">Basketball Uniforms</a>
+            <a class="cc-shell__footer-link" href="{{ shooting_shirts_url }}">Shooting Shirts</a>
+            <a class="cc-shell__footer-link" href="{{ travel_gear_url }}">Travel Gear</a>
+          </div>
+
+          <div class="cc-shell__footer-list">
+            <p class="cc-shell__footer-heading">Daily Essentials</p>
+            <a class="cc-shell__footer-link" href="{{ hoodies_fleece_url }}">Hoodies &amp; Fleece</a>
+            <a class="cc-shell__footer-link" href="{{ practice_shorts_url }}">Practice Shorts</a>
+            <a class="cc-shell__footer-link" href="{{ accessories_url }}">Accessories</a>
+            <a class="cc-shell__footer-link" href="{{ base_layers_url }}">Base Layers</a>
+          </div>
+
+          <div class="cc-shell__footer-list">
+            <p class="cc-shell__footer-heading">Custom Orders</p>
+            <a class="cc-shell__footer-link" href="{{ custom_uniform_url }}">Custom Uniform Order</a>
+            <a class="cc-shell__footer-link" href="{{ custom_shooting_url }}">Custom Shooting Shirt Order</a>
+            <a class="cc-shell__footer-link" href="{{ custom_travel_url }}">Custom Travel Gear Order</a>
+            <a class="cc-shell__footer-link" href="{{ custom_polo_url }}">Custom Polo Order</a>
+            <a class="cc-shell__footer-link" href="{{ process_url }}">Our Process</a>
+          </div>
+
+          <div class="cc-shell__footer-list">
+            <p class="cc-shell__footer-heading">Support</p>
+            <a class="cc-shell__footer-link" href="{{ about_url }}">About</a>
+            <a class="cc-shell__footer-link" href="{{ contact_url }}">Contact</a>
+            <a class="cc-shell__footer-link" href="{{ routes.search_url }}">Search</a>
+            <a class="cc-shell__footer-link" href="{{ routes.cart_url }}">Cart</a>
+            <a class="cc-shell__footer-link" href="{{ routes.account_url }}">Account</a>
+          </div>
+        </div>
+
+        <div class="cc-shell__footer-bottom">
+          <p class="cc-shell__footer-small">&copy; {{ 'now' | date: '%Y' }} Crossover Culture. Built for programs that show up dressed.</p>
+          <div class="cc-shell__footer-bottom-links">
+            <a class="cc-shell__footer-link" href="{{ routes.root_url }}">Home</a>
+            <a class="cc-shell__footer-link" href="{{ process_url }}">Process</a>
+            <a class="cc-shell__footer-link" href="{{ contact_url }}">Support</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
