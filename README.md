@@ -1,5 +1,52 @@
 # Crossover Culture Custom Product Pages
 
+## Atlas-Ready Storefront Shell Package
+
+This repo now also includes a safe premium storefront shell package for Shopify implementation.
+
+If ChatGPT agent mode in Atlas is being used for theme work, start here:
+
+- `ATLAS_IMPLEMENTATION.md`
+- `ATLAS_AGENT_PROMPT.md`
+- `references/crossover-culture-homepage-concept.png`
+
+These files are intended to help Atlas implement the premium storefront shell without modifying the protected custom-order systems.
+
+### Safe storefront shell files
+
+- `assets/crossover-culture-storefront.css`
+- `assets/crossover-culture-storefront.js`
+- `sections/cc-homepage-shell.liquid`
+- `sections/cc-collection-shell.liquid`
+- `sections/cc-product-shell.liquid`
+- `snippets/cc-store-header.liquid`
+- `snippets/cc-store-footer.liquid`
+- `snippets/cc-collection-card.liquid`
+- `templates/index.json`
+- `templates/collection.json`
+- `templates/product.json`
+
+### Protected files that must remain untouched
+
+- `templates/product.custom-team-uniform.json`
+- `templates/product.custom-shooting-shirt.json`
+- `templates/product.custom-travel-gear.json`
+- `templates/product.custom-polo.json`
+- `sections/team-order-form.liquid`
+- `sections/custom-shooting-shirt.liquid`
+- `sections/custom-travel-gear.liquid`
+- `sections/custom-polo.liquid`
+- `assets/team-order-form.css`
+- `assets/team-order-form.js`
+- `assets/custom-shooting-shirt.css`
+- `assets/custom-shooting-shirt.js`
+- `assets/custom-travel-gear.css`
+- `assets/custom-travel-gear.js`
+- `assets/custom-polo.css`
+- `assets/custom-polo.js`
+- `snippets/team-feature-icons.liquid`
+- `snippets/team-size-guide.liquid`
+
 ## Overview
 
 This repo contains Shopify theme files for four custom product-ordering flows:
