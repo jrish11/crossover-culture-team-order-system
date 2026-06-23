@@ -1,0 +1,378 @@
+{{ 'custom-shooting-shirt.css' | asset_url | stylesheet_tag }}
+{{ 'custom-practice-shorts.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'custom-practice-shorts.js' | asset_url }}" defer></script>
+
+{% liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign featured_image = product.featured_image | default: product.images.first
+  assign min_pieces = section.settings.min_pieces | default: 6
+  assign adult_unit_price = section.settings.adult_unit_price | default: 35
+  assign youth_unit_price = section.settings.youth_unit_price | default: 35
+  if min_pieces < 6
+    assign min_pieces = 6
+  endif
+
+  assign product_style = 'Enlisted'
+  assign garment_label = 'Practice Shorts'
+  assign adult_unit_price_cents = adult_unit_price | times: 100
+  assign youth_unit_price_cents = youth_unit_price | times: 100
+  assign adult_unit_price_display = adult_unit_price_cents | money
+  assign youth_unit_price_display = youth_unit_price_cents | money
+  assign billing_mode = 'Estimated total saved for review'
+  assign total_label = 'Estimated Total'
+  assign live_pricing_copy = 'Estimated total updates as sizes are entered.'
+  assign rules_copy = 'Minimum order: ' | append: min_pieces | append: ' pieces. Short color, artwork plus decoration color, size breakdown, pricing details, and notes are submitted with the order for production review.'
+  if adult_unit_price_cents == youth_unit_price_cents
+    assign billing_mode = 'Shopify checkout quantity synced to total pieces'
+    assign total_label = 'Order Total'
+    assign live_pricing_copy = 'Order total updates as sizes are entered. Shopify checkout quantity syncs to total pieces.'
+    assign rules_copy = 'Minimum order: ' | append: min_pieces | append: ' pieces. Short color, artwork plus decoration color, size breakdown, pricing details, and notes are submitted with the order. Shopify checkout quantity syncs to total pieces.'
+  endif
+  assign display_price = 'Mens / Womens ' | append: adult_unit_price_display | append: ' each | Youth ' | append: youth_unit_price_display | append: ' each'
+%}
+
+<section
+  class="custom-practice-shorts-section shooting-shirt-section"
+  data-section-id="{{ section.id }}"
+  data-min-pieces="{{ min_pieces }}"
+  data-adult-unit-price-cents="{{ adult_unit_price_cents }}"
+  data-youth-unit-price-cents="{{ youth_unit_price_cents }}"
+>
+  <div class="shooting-shirt-section__inner">
+    <form
+      class="shooting-shirt-section__order-canvas"
+      data-practice-shorts-form
+      action="{{ routes.cart_add_url }}"
+      method="post"
+      enctype="multipart/form-data"
+      accept-charset="UTF-8"
+      novalidate
+    >
+      <input type="hidden" name="id" value="{{ current_variant.id }}">
+      <input type="hidden" name="quantity" value="1" data-cart-quantity>
+      <input type="hidden" name="properties[Requested Unit Price]" value="{{ display_price }}">
+      <input type="hidden" name="properties[Mens / Womens Unit Price]" value="{{ adult_unit_price_display }}">
+      <input type="hidden" name="properties[Youth Unit Price]" value="{{ youth_unit_price_display }}">
+      <input type="hidden" name="properties[Product Style]" value="{{ product_style }}">
+      <input type="hidden" name="properties[Garment Type]" value="{{ garment_label }}">
+      <input type="hidden" name="properties[Short Color]" value="#111111 (Black)" data-color-property="Base">
+      <input type="hidden" name="properties[Artwork + Decoration Color]" value="#FFFFFF (White)" data-color-property="Artwork">
+      <input type="hidden" name="properties[Size Breakdown]" value="" data-size-breakdown-property>
+      <input type="hidden" name="properties[Total Pieces]" value="0" data-total-pieces-property>
+      <input type="hidden" name="properties[Mens / Womens Pieces]" value="0" data-adult-pieces-property>
+      <input type="hidden" name="properties[Youth Pieces]" value="0" data-youth-pieces-property>
+      <input type="hidden" name="properties[Calculated Order Total]" value="$0.00" data-calculated-total-property>
+      <input type="hidden" name="properties[Checkout Billing Mode]" value="{{ billing_mode }}">
+      <input type="hidden" name="properties[_Company]" value="Crossover Culture">
+      <input type="hidden" name="properties[_Order Flow]" value="Practice Shorts Customizer">
+      <input type="hidden" name="properties[_Source Product]" value="{{ product.title }}">
+
+      <div class="shooting-shirt-section__message shooting-shirt-section__message--error" data-form-message="error" role="alert" hidden></div>
+
+      <div class="shooting-shirt-section__gallery-column">
+        <div class="shooting-shirt-section__gallery">
+          <div class="shooting-shirt-section__thumbnails" role="tablist" aria-label="Product images">
+            {% for image in product.images %}
+              <button
+                type="button"
+                class="shooting-shirt-section__thumbnail{% if image.id == featured_image.id %} is-active{% endif %}"
+                data-gallery-thumb
+                data-image-src="{{ image | image_url: width: 1800 }}"
+                data-image-alt="{{ image.alt | default: product.title | escape }}"
+                aria-label="View image {{ forloop.index }}"
+                aria-selected="{% if image.id == featured_image.id %}true{% else %}false{% endif %}"
+              >
+                <img
+                  src="{{ image | image_url: width: 220 }}"
+                  alt="{{ image.alt | default: product.title | escape }}"
+                  loading="lazy"
+                  width="90"
+                  height="108"
+                >
+              </button>
+            {% endfor %}
+          </div>
+
+          <div class="shooting-shirt-section__main-image-shell">
+            {% if featured_image %}
+              <img
+                class="shooting-shirt-section__main-image"
+                data-main-image
+                src="{{ featured_image | image_url: width: 1800 }}"
+                alt="{{ featured_image.alt | default: product.title | escape }}"
+                loading="eager"
+                width="{{ featured_image.width }}"
+                height="{{ featured_image.height }}"
+              >
+            {% else %}
+              <div class="shooting-shirt-section__main-image shooting-shirt-section__main-image--fallback" aria-hidden="true">
+                <svg class="shooting-shirt-section__fallback-svg" viewBox="0 0 240 240" fill="none">
+                  <rect x="40" y="48" width="160" height="144" stroke="currentColor" stroke-width="8"/>
+                  <path d="M64 168l40-44 28 28 24-20 20 36" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="92" cy="92" r="14" fill="currentColor"/>
+                </svg>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+        <p class="shooting-shirt-section__gallery-note">Use the product gallery to show front, back, and placement references before the customer submits the order.</p>
+      </div>
+
+      <div class="shooting-shirt-section__meta-column">
+        <div class="shooting-shirt-section__product-meta">
+          <p class="shooting-shirt-section__eyebrow">Premium Team Practice Short Ordering</p>
+          <h1 class="shooting-shirt-section__title">{{ product.title }}</h1>
+          <p class="shooting-shirt-section__price">{{ display_price }}</p>
+          <p class="custom-practice-shorts-section__live-price-copy" data-live-pricing-copy>{{ live_pricing_copy }}</p>
+          <p class="shooting-shirt-section__intro">{{ section.settings.intro_copy }}</p>
+          <ul class="shooting-shirt-section__feature-list">
+            <li>100% polyester moisture-wicking mesh with lightweight 4oz fabric and an athletic fit.</li>
+            <li>Standard 10in short with no pockets, sublimated in any color, and no additional setup fees.</li>
+            <li>Final mockups and ship-date confirmation are emailed within 5 business days before the 30-day production window.</li>
+          </ul>
+        </div>
+
+        <div class="shooting-shirt-section__summary-bar custom-practice-shorts-section__price-grid">
+          <div class="shooting-shirt-section__summary-chip">
+            <span class="shooting-shirt-section__summary-label">Mens</span>
+            <span class="shooting-shirt-section__summary-value">{{ adult_unit_price_display }} | XS-3XL</span>
+          </div>
+          <div class="shooting-shirt-section__summary-chip">
+            <span class="shooting-shirt-section__summary-label">Womens</span>
+            <span class="shooting-shirt-section__summary-value">{{ adult_unit_price_display }} | XS-2XL</span>
+          </div>
+          <div class="shooting-shirt-section__summary-chip">
+            <span class="shooting-shirt-section__summary-label">Youth</span>
+            <span class="shooting-shirt-section__summary-value">{{ youth_unit_price_display }} | YXS-YXL</span>
+          </div>
+          <div class="shooting-shirt-section__summary-chip">
+            <span class="shooting-shirt-section__summary-label">{{ total_label }}</span>
+            <span class="shooting-shirt-section__summary-value" data-summary-estimated-total>$0.00</span>
+          </div>
+          <div class="shooting-shirt-section__summary-chip">
+            <span class="shooting-shirt-section__summary-label">Minimum</span>
+            <span class="shooting-shirt-section__summary-value">{{ min_pieces }} Pieces</span>
+          </div>
+        </div>
+      </div>
+
+      <section class="shooting-shirt-section__panel shooting-shirt-section__panel--sizes">
+        <div class="shooting-shirt-section__field-header">
+          <span class="shooting-shirt-section__field-label">2. Size Breakdown</span>
+          <span class="shooting-shirt-section__field-meta">Minimum {{ min_pieces }} total pieces</span>
+        </div>
+
+        <div class="shooting-shirt-section__sizes-grid custom-practice-shorts-section__sizes-grid">
+          <div class="shooting-shirt-section__sizes-panel">
+            <div class="shooting-shirt-section__sizes-panel-head">
+              <span class="shooting-shirt-section__sizes-title">Mens</span>
+              <span class="shooting-shirt-section__sizes-note">XS-3XL</span>
+            </div>
+            <div class="shooting-shirt-section__sizes-list">
+              {% assign mens_sizes = 'XS,S,M,L,XL,2XL,3XL' | split: ',' %}
+              {% for size in mens_sizes %}
+                <label class="shooting-shirt-section__size-row">
+                  <span class="shooting-shirt-section__size-name">{{ size }}</span>
+                  <input
+                    class="shooting-shirt-section__quantity-input"
+                    type="number"
+                    min="0"
+                    max="99"
+                    placeholder="0"
+                    inputmode="numeric"
+                    data-size-quantity
+                    data-price-tier="Adult"
+                    data-size-label="Mens {{ size }}"
+                  >
+                </label>
+              {% endfor %}
+            </div>
+          </div>
+
+          <div class="shooting-shirt-section__sizes-panel">
+            <div class="shooting-shirt-section__sizes-panel-head">
+              <span class="shooting-shirt-section__sizes-title">Womens</span>
+              <span class="shooting-shirt-section__sizes-note">XS-2XL</span>
+            </div>
+            <div class="shooting-shirt-section__sizes-list">
+              {% assign womens_sizes = 'XS,S,M,L,XL,2XL' | split: ',' %}
+              {% for size in womens_sizes %}
+                <label class="shooting-shirt-section__size-row">
+                  <span class="shooting-shirt-section__size-name">{{ size }}</span>
+                  <input
+                    class="shooting-shirt-section__quantity-input"
+                    type="number"
+                    min="0"
+                    max="99"
+                    placeholder="0"
+                    inputmode="numeric"
+                    data-size-quantity
+                    data-price-tier="Adult"
+                    data-size-label="Womens {{ size }}"
+                  >
+                </label>
+              {% endfor %}
+            </div>
+          </div>
+
+          <div class="shooting-shirt-section__sizes-panel">
+            <div class="shooting-shirt-section__sizes-panel-head">
+              <span class="shooting-shirt-section__sizes-title">Youth</span>
+              <span class="shooting-shirt-section__sizes-note">YXS-YXL</span>
+            </div>
+            <div class="shooting-shirt-section__sizes-list">
+              {% assign youth_sizes = 'YXS,YS,YM,YL,YXL' | split: ',' %}
+              {% for size in youth_sizes %}
+                <label class="shooting-shirt-section__size-row">
+                  <span class="shooting-shirt-section__size-name">{{ size }}</span>
+                  <input
+                    class="shooting-shirt-section__quantity-input"
+                    type="number"
+                    min="0"
+                    max="99"
+                    placeholder="0"
+                    inputmode="numeric"
+                    data-size-quantity
+                    data-price-tier="Youth"
+                    data-size-label="Youth {{ size }}"
+                  >
+                </label>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="shooting-shirt-section__panel shooting-shirt-section__panel--colors">
+        <div class="shooting-shirt-section__field-header">
+          <span class="shooting-shirt-section__field-label">1. Colors</span>
+          <button type="button" class="shooting-shirt-section__reset-link" data-reset-colors>Reset to default</button>
+        </div>
+
+        <div class="shooting-shirt-section__color-studio">
+          <div class="shooting-shirt-section__color-topline">
+            <div class="shooting-shirt-section__color-targets" role="tablist" aria-label="Color application">
+              <button type="button" class="shooting-shirt-section__color-target is-active" data-color-target-button data-color-target="Base" data-color-apply-copy="Applies to the main short body and waistband." aria-pressed="true">Main Short</button>
+              <button type="button" class="shooting-shirt-section__color-target" data-color-target-button data-color-target="Artwork" data-color-apply-copy="Applies to the CC logo, piping, and words." aria-pressed="false">Artwork + Decoration</button>
+            </div>
+            <p class="shooting-shirt-section__color-caption" data-active-color-display>#111111 (Black)</p>
+          </div>
+
+          <div class="shooting-shirt-section__color-layout">
+            <label class="shooting-shirt-section__wheel-shell" aria-label="Choose practice short color">
+              <span class="shooting-shirt-section__wheel-visual"></span>
+              <input type="color" class="shooting-shirt-section__wheel-input" value="#111111" data-color-picker>
+            </label>
+
+            <div class="shooting-shirt-section__palette-area">
+              <p class="shooting-shirt-section__color-apply" data-color-apply-text>Applies to the main short body and waistband.</p>
+
+              <div class="shooting-shirt-section__hex-shell">
+                <label class="shooting-shirt-section__field-label shooting-shirt-section__field-label--small" for="ColorHex-{{ section.id }}">Custom HEX</label>
+                <div class="shooting-shirt-section__hex-row">
+                  <span class="shooting-shirt-section__hex-preview" data-color-preview aria-hidden="true"></span>
+                  <input
+                    id="ColorHex-{{ section.id }}"
+                    class="shooting-shirt-section__text-input"
+                    type="text"
+                    maxlength="7"
+                    value="#111111"
+                    autocomplete="off"
+                    inputmode="text"
+                    data-color-hex
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="shooting-shirt-section__color-summary">
+            <div class="shooting-shirt-section__color-summary-item" data-color-summary="Base">
+              <span class="shooting-shirt-section__color-summary-label">Main Short</span>
+              <span class="shooting-shirt-section__color-summary-value">#111111 (Black)</span>
+            </div>
+            <div class="shooting-shirt-section__color-summary-item" data-color-summary="Artwork">
+              <span class="shooting-shirt-section__color-summary-label">Artwork + Decoration</span>
+              <span class="shooting-shirt-section__color-summary-value">#FFFFFF (White)</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="shooting-shirt-section__panel shooting-shirt-section__panel--notes">
+        <div class="shooting-shirt-section__field-header">
+          <label class="shooting-shirt-section__field-label" for="OrderNotes-{{ section.id }}">3. Order Notes</label>
+          <span class="shooting-shirt-section__field-meta">Optional</span>
+        </div>
+        <textarea
+          id="OrderNotes-{{ section.id }}"
+          class="shooting-shirt-section__textarea"
+          name="properties[Order Notes]"
+          rows="6"
+          placeholder="Add any production notes, placement notes, or ship-date context here."
+        ></textarea>
+      </section>
+
+      <section class="shooting-shirt-section__panel shooting-shirt-section__panel--summary">
+        <div class="shooting-shirt-section__field-header">
+          <span class="shooting-shirt-section__field-label">Order Summary</span>
+          <span class="shooting-shirt-section__field-meta">Saved with the order</span>
+        </div>
+
+        <div class="shooting-shirt-section__order-summary">
+          <div class="shooting-shirt-section__order-summary-item">
+            <span class="shooting-shirt-section__order-summary-label">Short Color</span>
+            <span class="shooting-shirt-section__order-summary-value" data-summary-color="Base">#111111 (Black)</span>
+          </div>
+          <div class="shooting-shirt-section__order-summary-item">
+            <span class="shooting-shirt-section__order-summary-label">Artwork + Decoration</span>
+            <span class="shooting-shirt-section__order-summary-value" data-summary-color="Artwork">#FFFFFF (White)</span>
+          </div>
+          <div class="shooting-shirt-section__order-summary-item">
+            <span class="shooting-shirt-section__order-summary-label">Total Pieces</span>
+            <span class="shooting-shirt-section__order-summary-value" data-summary-total-pieces>0 pieces</span>
+          </div>
+          <div class="shooting-shirt-section__order-summary-item">
+            <span class="shooting-shirt-section__order-summary-label">{{ total_label }}</span>
+            <span class="shooting-shirt-section__order-summary-value" data-summary-estimated-total>$0.00</span>
+          </div>
+          <div class="shooting-shirt-section__order-summary-item custom-practice-shorts-section__order-summary-item--wide">
+            <span class="shooting-shirt-section__order-summary-label">Size Breakdown</span>
+            <span class="shooting-shirt-section__order-summary-value custom-practice-shorts-section__order-summary-value--wrap" data-summary-size-breakdown>No sizes entered yet</span>
+          </div>
+        </div>
+      </section>
+
+      <div class="shooting-shirt-section__cta-section">
+        <div class="shooting-shirt-section__cta-group">
+          <button
+            type="submit"
+            class="shooting-shirt-section__cta shooting-shirt-section__cta--primary"
+            data-add-to-cart
+            data-submitting-label="Adding Practice Shorts Order..."
+          >
+            Add Practice Shorts Order To Cart
+          </button>
+          <a class="shooting-shirt-section__cta-link" href="/pages/contact?type=quote">Request Team Quote</a>
+        </div>
+      </div>
+
+      <p class="shooting-shirt-section__rules">{{ rules_copy }}</p>
+    </form>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Practice Shorts Order",
+  "tag": "section",
+  "class": "custom-practice-shorts-section",
+  "settings": [
+    { "type": "number", "id": "min_pieces", "label": "Minimum Pieces", "default": 6 },
+    { "type": "number", "id": "adult_unit_price", "label": "Mens / Womens Unit Price", "default": 35 },
+    { "type": "number", "id": "youth_unit_price", "label": "Youth Unit Price", "default": 35 },
+    { "type": "textarea", "id": "intro_copy", "label": "Intro Copy", "default": "Build your practice short order with separate main short and artwork plus decoration colors, a full size breakdown, and saved pricing details in the same streamlined Crossover Culture order flow." }
+  ],
+  "presets": [{ "name": "Practice Shorts Order" }]
+}
+{% endschema %}

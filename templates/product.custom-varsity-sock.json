@@ -1,0 +1,15 @@
+{
+  "sections": {
+    "main": {
+      "type": "custom-varsity-sock",
+      "settings": {
+        "unit_price": 12,
+        "min_pieces": 1,
+        "intro_copy": "Build your varsity sock order with one stock color selection, a full size breakdown, required vector logo upload, and saved pricing details in the same streamlined Crossover Culture order flow."
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

@@ -1,0 +1,57 @@
+.custom-practice-shorts-section .shooting-shirt-section__title {
+  max-width: 8ch;
+}
+
+.custom-practice-shorts-section__live-price-copy {
+  color: var(--shooting-shirt-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.45;
+  margin: -2px 0 0;
+}
+
+.custom-practice-shorts-section .shooting-shirt-section__order-canvas {
+  grid-template-areas:
+    "error error"
+    "gallery meta"
+    "sizes colors"
+    "notes notes"
+    "summary summary"
+    "cta cta"
+    "rules rules";
+}
+
+.custom-practice-shorts-section .shooting-shirt-section__gallery-note {
+  max-width: 36rem;
+}
+
+.custom-practice-shorts-section__price-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.custom-practice-shorts-section__sizes-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.custom-practice-shorts-section__order-summary-item--wide {
+  grid-column: 1 / -1;
+}
+
+.custom-practice-shorts-section__order-summary-value--wrap {
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+@media screen and (max-width: 1240px) {
+  .custom-practice-shorts-section__price-grid,
+  .custom-practice-shorts-section__sizes-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .custom-practice-shorts-section__price-grid,
+  .custom-practice-shorts-section__sizes-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

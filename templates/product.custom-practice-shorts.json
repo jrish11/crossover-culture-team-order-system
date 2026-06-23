@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "main": {
+      "type": "custom-practice-shorts",
+      "settings": {
+        "min_pieces": 6,
+        "adult_unit_price": 35,
+        "youth_unit_price": 35,
+        "intro_copy": "Build your Enlisted Practice Shorts order with separate main short and artwork plus decoration colors, a full size breakdown, and saved pricing details in the same streamlined Crossover Culture order flow."
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

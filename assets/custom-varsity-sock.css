@@ -1,0 +1,342 @@
+.custom-varsity-sock-section {
+  --shooting-shirt-accent: #f4f1ea;
+  --shooting-shirt-border: rgba(79, 72, 62, 0.16);
+  --shooting-shirt-soft-border: rgba(255, 255, 255, 0.48);
+  --shooting-shirt-surface: rgba(255, 255, 255, 0.34);
+  --shooting-shirt-surface-strong: rgba(255, 255, 255, 0.52);
+}
+
+.custom-varsity-sock-section .shooting-shirt-section__inner {
+  padding-top: 34px;
+}
+
+.custom-varsity-sock-section .shooting-shirt-section__panel {
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+
+.custom-varsity-sock-section .shooting-shirt-section__summary-bar {
+  align-items: stretch;
+  background: rgba(255, 255, 255, 0.34);
+  backdrop-filter: blur(22px) saturate(135%);
+  -webkit-backdrop-filter: blur(22px) saturate(135%);
+  border: 1px solid rgba(255, 255, 255, 0.52);
+  border-radius: 30px;
+  box-shadow:
+    0 20px 45px rgba(31, 28, 23, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  gap: 0;
+  overflow: hidden;
+  padding: 4px;
+  position: relative;
+}
+
+.custom-varsity-sock-section .shooting-shirt-section__summary-bar::before,
+.custom-varsity-sock-section .shooting-shirt-section__main-image-shell::before,
+.custom-varsity-sock-section .shooting-shirt-section__sizes-panel::before,
+.custom-varsity-sock-section .shooting-shirt-section__color-studio::before,
+.custom-varsity-sock-section .shooting-shirt-section__panel--upload::before,
+.custom-varsity-sock-section .custom-varsity-sock-section__accordion-body::before,
+.custom-varsity-sock-section .shooting-shirt-section__order-summary::before {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.56), rgba(255, 255, 255, 0.06));
+  content: "";
+  inset: 0 0 auto 0;
+  height: 48%;
+  pointer-events: none;
+  position: absolute;
+}
+
+.custom-varsity-sock-section .shooting-shirt-section__title {
+  max-width: 6ch;
+}
+
+.custom-varsity-sock-section__live-price-copy {
+  color: var(--shooting-shirt-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.45;
+  margin: -2px 0 0;
+}
+
+.custom-varsity-sock-section .shooting-shirt-section__order-canvas {
+  grid-template-areas:
+    "error error"
+    "gallery meta"
+    "sizes colors"
+    "upload notes"
+    "summary summary"
+    "cta cta"
+    "rules rules";
+}
+
+.custom-varsity-sock-section__price-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.custom-varsity-sock-section .shooting-shirt-section__summary-chip {
+  background: transparent;
+  border: 0;
+  border-left: 1px solid rgba(79, 72, 62, 0.08);
+  min-height: 68px;
+  padding: 14px 16px;
+}
+
+.custom-varsity-sock-section .shooting-shirt-section__summary-chip:first-child {
+  border-left: 0;
+}
+
+.custom-varsity-sock-section .shooting-shirt-section__main-image-shell,
+.custom-varsity-sock-section .shooting-shirt-section__sizes-panel,
+.custom-varsity-sock-section .shooting-shirt-section__color-studio,
+.custom-varsity-sock-section .shooting-shirt-section__panel--upload,
+.custom-varsity-sock-section .custom-varsity-sock-section__accordion-body,
+.custom-varsity-sock-section .shooting-shirt-section__order-summary {
+  background: rgba(255, 255, 255, 0.34);
+  backdrop-filter: blur(22px) saturate(135%);
+  -webkit-backdrop-filter: blur(22px) saturate(135%);
+  border: 1px solid rgba(255, 255, 255, 0.52);
+  border-radius: 30px;
+  box-shadow:
+    0 20px 45px rgba(31, 28, 23, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  position: relative;
+}
+
+.custom-varsity-sock-section .shooting-shirt-section__main-image-shell {
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.68), rgba(255, 255, 255, 0.18) 42%, rgba(255, 255, 255, 0.3) 100%);
+  min-height: 540px;
+}
+
+.custom-varsity-sock-section .shooting-shirt-section__sizes-panel,
+.custom-varsity-sock-section .shooting-shirt-section__color-studio,
+.custom-varsity-sock-section .shooting-shirt-section__panel--upload,
+.custom-varsity-sock-section .custom-varsity-sock-section__accordion-body,
+.custom-varsity-sock-section .shooting-shirt-section__order-summary {
+  padding: 18px;
+}
+
+.custom-varsity-sock-section__sizes-grid {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.custom-varsity-sock-section__size-row {
+  align-items: center;
+  display: grid;
+  gap: 14px;
+  grid-template-columns: minmax(0, 1fr) 72px;
+}
+
+.custom-varsity-sock-section__size-copy {
+  display: grid;
+  gap: 0;
+}
+
+.custom-varsity-sock-section .shooting-shirt-section__size-name,
+.custom-varsity-sock-section .shooting-shirt-section__summary-label,
+.custom-varsity-sock-section .shooting-shirt-section__field-label,
+.custom-varsity-sock-section .shooting-shirt-section__color-summary-label,
+.custom-varsity-sock-section .shooting-shirt-section__order-summary-label {
+  letter-spacing: 0.09em;
+}
+
+.custom-varsity-sock-section__color-studio {
+  display: grid;
+  gap: 14px;
+}
+
+.custom-varsity-sock-section__color-topline {
+  align-items: baseline;
+  display: flex;
+  gap: 14px;
+  justify-content: space-between;
+}
+
+.custom-varsity-sock-section__select-shell {
+  display: grid;
+  gap: 8px;
+  max-width: 320px;
+}
+
+.custom-varsity-sock-section .shooting-shirt-section__select-input,
+.custom-varsity-sock-section .shooting-shirt-section__file-input,
+.custom-varsity-sock-section .shooting-shirt-section__textarea,
+.custom-varsity-sock-section .shooting-shirt-section__quantity-input {
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(14px) saturate(130%);
+  -webkit-backdrop-filter: blur(14px) saturate(130%);
+  border: 1px solid rgba(255, 255, 255, 0.62);
+  border-radius: 18px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    0 12px 28px rgba(31, 28, 23, 0.05);
+}
+
+.custom-varsity-sock-section .shooting-shirt-section__quantity-input {
+  min-height: 40px;
+}
+
+.custom-varsity-sock-section .shooting-shirt-section__file-input {
+  min-height: 48px;
+}
+
+.custom-varsity-sock-section .shooting-shirt-section__textarea {
+  min-height: 104px;
+}
+
+.custom-varsity-sock-section .shooting-shirt-section__color-summary {
+  background: rgba(255, 255, 255, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-radius: 24px;
+  margin-top: 0;
+  overflow: hidden;
+}
+
+.custom-varsity-sock-section .shooting-shirt-section__color-summary-item,
+.custom-varsity-sock-section .shooting-shirt-section__order-summary-item {
+  background: transparent;
+  border: 0;
+  min-height: 0;
+  padding: 12px 14px;
+}
+
+.custom-varsity-sock-section .shooting-shirt-section__color-summary-item + .shooting-shirt-section__color-summary-item,
+.custom-varsity-sock-section .shooting-shirt-section__order-summary-item {
+  border-left: 1px solid rgba(79, 72, 62, 0.08);
+}
+
+.custom-varsity-sock-section .shooting-shirt-section__order-summary {
+  gap: 0;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  overflow: hidden;
+  padding: 4px;
+}
+
+.custom-varsity-sock-section .shooting-shirt-section__order-summary-item:nth-child(4n + 1) {
+  border-left: 0;
+}
+
+.custom-varsity-sock-section .shooting-shirt-section__order-summary-item--wide {
+  border-left: 0;
+  border-top: 1px solid rgba(79, 72, 62, 0.08);
+  grid-column: 1 / -1;
+}
+
+.custom-varsity-sock-section__order-summary-item--wide {
+  grid-column: 1 / -1;
+}
+
+.custom-varsity-sock-section__order-summary-value--wrap {
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.custom-varsity-sock-section__accordion {
+  margin-top: 2px;
+}
+
+.custom-varsity-sock-section__accordion-summary {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 999px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  cursor: pointer;
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  list-style: none;
+  min-height: 42px;
+  padding: 0 16px;
+}
+
+.custom-varsity-sock-section__accordion-summary::-webkit-details-marker {
+  display: none;
+}
+
+.custom-varsity-sock-section__accordion-summary::after {
+  color: var(--shooting-shirt-muted);
+  content: '+';
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.custom-varsity-sock-section__accordion[open] .custom-varsity-sock-section__accordion-summary::after {
+  content: '-';
+}
+
+.custom-varsity-sock-section__accordion-body {
+  margin-top: 10px;
+}
+
+.custom-varsity-sock-section__accordion--guide {
+  margin-bottom: 12px;
+}
+
+.custom-varsity-sock-section__guide-list {
+  display: grid;
+  gap: 8px;
+}
+
+.custom-varsity-sock-section__guide-item {
+  color: var(--shooting-shirt-muted);
+  font-size: 0.72rem;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.custom-varsity-sock-section__guide-item strong {
+  color: var(--shooting-shirt-primary);
+  font-weight: 700;
+}
+
+.custom-varsity-sock-section .shooting-shirt-section__reset-link {
+  background: rgba(255, 255, 255, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.44);
+  border-radius: 999px;
+  padding: 8px 14px;
+}
+
+.custom-varsity-sock-section .shooting-shirt-section__gallery-note,
+.custom-varsity-sock-section .shooting-shirt-section__rules {
+  color: rgba(62, 56, 48, 0.78);
+}
+
+.custom-varsity-sock-section .shooting-shirt-section__cta {
+  border-radius: 999px;
+}
+
+@media screen and (max-width: 1240px) {
+  .custom-varsity-sock-section__price-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .custom-varsity-sock-section .shooting-shirt-section__order-summary-item:nth-child(2n + 1) {
+    border-left: 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .custom-varsity-sock-section__price-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .custom-varsity-sock-section .shooting-shirt-section__summary-chip,
+  .custom-varsity-sock-section .shooting-shirt-section__color-summary-item,
+  .custom-varsity-sock-section .shooting-shirt-section__order-summary-item {
+    border-left: 0;
+    border-top: 1px solid rgba(79, 72, 62, 0.08);
+  }
+
+  .custom-varsity-sock-section .shooting-shirt-section__summary-chip:first-child,
+  .custom-varsity-sock-section .shooting-shirt-section__color-summary-item:first-child,
+  .custom-varsity-sock-section .shooting-shirt-section__order-summary-item:first-child {
+    border-top: 0;
+  }
+
+  .custom-varsity-sock-section__size-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

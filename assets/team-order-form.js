@@ -123,6 +123,7 @@
     const rosterBody = section.querySelector('[data-roster-body]');
     const addPlayerButton = section.querySelector('[data-add-player]');
     const addToCartButton = section.querySelector('[data-add-to-cart]');
+    const cartQuantityInput = section.querySelector('[data-cart-quantity]');
     const rosterPropertyInput = section.querySelector('[data-roster-property]');
     const playerCountPropertyInput = section.querySelector('[data-player-count-property]');
     const styleInput = section.querySelector('[data-style-value]');
@@ -355,6 +356,7 @@
       const rosterEntries = buildRosterEntries();
       rosterPropertyInput.value = rosterEntries.join(' | ');
       playerCountPropertyInput.value = String(rosterEntries.length);
+      cartQuantityInput.value = String(Math.max(rosterEntries.length, 1));
       return rosterEntries;
     };
 

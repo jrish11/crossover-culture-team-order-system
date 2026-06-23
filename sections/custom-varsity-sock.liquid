@@ -1,0 +1,381 @@
+{{ 'custom-shooting-shirt.css' | asset_url | stylesheet_tag }}
+{{ 'custom-varsity-sock.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'custom-varsity-sock.js' | asset_url }}" defer></script>
+
+{% liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign featured_image = product.featured_image | default: product.images.first
+  assign min_pieces = section.settings.min_pieces | default: 1
+  assign unit_price = section.settings.unit_price | default: 12
+  if min_pieces < 1
+    assign min_pieces = 1
+  endif
+
+  assign product_style = 'Base Layer'
+  assign garment_label = 'Varsity Sock'
+  assign unit_price_cents = unit_price | times: 100
+  assign unit_price_display = unit_price_cents | money
+  assign display_price = 'Mens / Womens / Youth ' | append: unit_price_display | append: ' each'
+  assign total_label = 'Estimated Total'
+  assign live_pricing_copy = 'Estimated total before tax and discounts updates as sizes are entered. Shopify checkout quantity syncs to total pairs.'
+  assign rules_copy = 'Minimum order: ' | append: min_pieces | append: ' pair'
+  if min_pieces != 1
+    assign rules_copy = rules_copy | append: 's'
+  endif
+  assign rules_copy = rules_copy | append: '. Sock color, required vector logo upload, size breakdown, pricing details, and notes are submitted with the order. Displayed totals are before tax and discounts. Shopify checkout quantity syncs to total pairs.'
+%}
+
+<section
+  class="custom-varsity-sock-section shooting-shirt-section"
+  data-section-id="{{ section.id }}"
+  data-min-pieces="{{ min_pieces }}"
+  data-unit-price-cents="{{ unit_price_cents }}"
+>
+  <div class="shooting-shirt-section__inner">
+    <form
+      class="shooting-shirt-section__order-canvas"
+      data-varsity-sock-form
+      action="{{ routes.cart_add_url }}"
+      method="post"
+      enctype="multipart/form-data"
+      accept-charset="UTF-8"
+      novalidate
+    >
+      <input type="hidden" name="id" value="{{ current_variant.id }}">
+      <input type="hidden" name="quantity" value="1" data-cart-quantity>
+      <input type="hidden" name="properties[Requested Unit Price]" value="{{ display_price }}">
+      <input type="hidden" name="properties[Unit Price]" value="{{ unit_price_display }}">
+      <input type="hidden" name="properties[Product Style]" value="{{ product_style }}">
+      <input type="hidden" name="properties[Garment Type]" value="{{ garment_label }}">
+      <input type="hidden" name="properties[Sock Color]" value="#111111 (Black)" data-color-property>
+      <input type="hidden" name="properties[Sock Color Code]" value="A3-3-BLK" data-color-code-property>
+      <input type="hidden" name="properties[Size Breakdown]" value="" data-size-breakdown-property>
+      <input type="hidden" name="properties[Total Pairs]" value="0" data-total-pairs-property>
+      <input type="hidden" name="properties[Calculated Order Total]" value="$0.00" data-calculated-total-property>
+      <input type="hidden" name="properties[Displayed Total Context]" value="Before tax and discounts">
+      <input type="hidden" name="properties[Checkout Billing Mode]" value="Shopify checkout quantity synced to total pairs">
+      <input type="hidden" name="properties[_Company]" value="Crossover Culture">
+      <input type="hidden" name="properties[_Order Flow]" value="Varsity Sock Order">
+      <input type="hidden" name="properties[_Source Product]" value="{{ product.title }}">
+
+      <div class="shooting-shirt-section__message shooting-shirt-section__message--error" data-form-message="error" role="alert" hidden></div>
+
+      <div class="shooting-shirt-section__gallery-column">
+        <div class="shooting-shirt-section__gallery">
+          <div class="shooting-shirt-section__thumbnails" role="tablist" aria-label="Product images">
+            {% for image in product.images %}
+              <button
+                type="button"
+                class="shooting-shirt-section__thumbnail{% if image.id == featured_image.id %} is-active{% endif %}"
+                data-gallery-thumb
+                data-image-src="{{ image | image_url: width: 1800 }}"
+                data-image-alt="{{ image.alt | default: product.title | escape }}"
+                aria-label="View image {{ forloop.index }}"
+                aria-selected="{% if image.id == featured_image.id %}true{% else %}false{% endif %}"
+              >
+                <img
+                  src="{{ image | image_url: width: 220 }}"
+                  alt="{{ image.alt | default: product.title | escape }}"
+                  loading="lazy"
+                  width="90"
+                  height="108"
+                >
+              </button>
+            {% endfor %}
+          </div>
+
+          <div class="shooting-shirt-section__main-image-shell">
+            {% if featured_image %}
+              <img
+                class="shooting-shirt-section__main-image"
+                data-main-image
+                src="{{ featured_image | image_url: width: 1800 }}"
+                alt="{{ featured_image.alt | default: product.title | escape }}"
+                loading="eager"
+                width="{{ featured_image.width }}"
+                height="{{ featured_image.height }}"
+              >
+            {% else %}
+              <div class="shooting-shirt-section__main-image shooting-shirt-section__main-image--fallback" aria-hidden="true">
+                <svg class="shooting-shirt-section__fallback-svg" viewBox="0 0 240 240" fill="none">
+                  <rect x="40" y="48" width="160" height="144" stroke="currentColor" stroke-width="8"/>
+                  <path d="M64 168l40-44 28 28 24-20 20 36" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="92" cy="92" r="14" fill="currentColor"/>
+                </svg>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+        <p class="shooting-shirt-section__gallery-note">Use the product gallery to show black and white color references before the customer submits the order.</p>
+      </div>
+
+      <div class="shooting-shirt-section__meta-column">
+        <div class="shooting-shirt-section__product-meta">
+          <p class="shooting-shirt-section__eyebrow">Premium Team Base Layer Ordering</p>
+          <h1 class="shooting-shirt-section__title">{{ product.title }}</h1>
+          <p class="shooting-shirt-section__price">{{ display_price }}</p>
+          <p class="custom-varsity-sock-section__live-price-copy" data-live-pricing-copy>{{ live_pricing_copy }}</p>
+          <p class="shooting-shirt-section__intro">{{ section.settings.intro_copy }}</p>
+          <ul class="shooting-shirt-section__feature-list">
+            <li>Performance sock with moisture wicking support, arch band structure, and embroidered logo.</li>
+            <li>36% Coolmax, 36% cotton, 25% polyester, and 3% spandex.</li>
+            <li>Choose one stock sock color, upload one production-ready vector logo file, and submit the full size breakdown in one streamlined order.</li>
+          </ul>
+        </div>
+
+        <div class="shooting-shirt-section__summary-bar custom-varsity-sock-section__price-grid">
+          <div class="shooting-shirt-section__summary-chip">
+            <span class="shooting-shirt-section__summary-label">Unit Price</span>
+            <span class="shooting-shirt-section__summary-value">{{ unit_price_display }} each</span>
+          </div>
+          <div class="shooting-shirt-section__summary-chip">
+            <span class="shooting-shirt-section__summary-label">Style</span>
+            <span class="shooting-shirt-section__summary-value">{{ product_style }}</span>
+          </div>
+          <div class="shooting-shirt-section__summary-chip">
+            <span class="shooting-shirt-section__summary-label">Colors</span>
+            <span class="shooting-shirt-section__summary-value">Black / White</span>
+          </div>
+          <div class="shooting-shirt-section__summary-chip">
+            <span class="shooting-shirt-section__summary-label">{{ total_label }}</span>
+            <span class="shooting-shirt-section__summary-value" data-summary-order-total>$0.00</span>
+          </div>
+          <div class="shooting-shirt-section__summary-chip">
+            <span class="shooting-shirt-section__summary-label">Minimum</span>
+            <span class="shooting-shirt-section__summary-value">{{ min_pieces }} Pair{% if min_pieces != 1 %}s{% endif %}</span>
+          </div>
+        </div>
+      </div>
+
+      <section class="shooting-shirt-section__panel shooting-shirt-section__panel--sizes">
+        <div class="shooting-shirt-section__field-header">
+          <span class="shooting-shirt-section__field-label">2. Size Breakdown</span>
+          <span class="shooting-shirt-section__field-meta">Minimum {{ min_pieces }} total pair{% if min_pieces != 1 %}s{% endif %}</span>
+        </div>
+
+        <div class="shooting-shirt-section__sizes-grid custom-varsity-sock-section__sizes-grid">
+          <div class="shooting-shirt-section__sizes-panel">
+            <div class="shooting-shirt-section__sizes-panel-head">
+              <span class="shooting-shirt-section__sizes-title">Stock Sizes</span>
+              <span class="shooting-shirt-section__sizes-note">Small-XLarge</span>
+            </div>
+            <details class="custom-varsity-sock-section__accordion custom-varsity-sock-section__accordion--guide">
+              <summary class="custom-varsity-sock-section__accordion-summary">
+                <span>View stock size guide</span>
+              </summary>
+              <div class="custom-varsity-sock-section__accordion-body custom-varsity-sock-section__guide-list">
+                <p class="custom-varsity-sock-section__guide-item"><strong>Small</strong> Y2-4 / W4-W6</p>
+                <p class="custom-varsity-sock-section__guide-item"><strong>Medium</strong> M5-8 / W7-9</p>
+                <p class="custom-varsity-sock-section__guide-item"><strong>Large</strong> M9-12 / W11-13</p>
+                <p class="custom-varsity-sock-section__guide-item"><strong>X-Large</strong> M13-16</p>
+              </div>
+            </details>
+            <div class="shooting-shirt-section__sizes-list">
+              <label class="shooting-shirt-section__size-row custom-varsity-sock-section__size-row">
+                <span class="custom-varsity-sock-section__size-copy">
+                  <span class="shooting-shirt-section__size-name">Small</span>
+                </span>
+                <input
+                  class="shooting-shirt-section__quantity-input"
+                  type="number"
+                  min="0"
+                  max="99"
+                  placeholder="0"
+                  inputmode="numeric"
+                  data-size-quantity
+                  data-size-label="Small (Y2-4 / W4-W6)"
+                >
+              </label>
+
+              <label class="shooting-shirt-section__size-row custom-varsity-sock-section__size-row">
+                <span class="custom-varsity-sock-section__size-copy">
+                  <span class="shooting-shirt-section__size-name">Medium</span>
+                </span>
+                <input
+                  class="shooting-shirt-section__quantity-input"
+                  type="number"
+                  min="0"
+                  max="99"
+                  placeholder="0"
+                  inputmode="numeric"
+                  data-size-quantity
+                  data-size-label="Medium (M5-8 / W7-9)"
+                >
+              </label>
+
+              <label class="shooting-shirt-section__size-row custom-varsity-sock-section__size-row">
+                <span class="custom-varsity-sock-section__size-copy">
+                  <span class="shooting-shirt-section__size-name">Large</span>
+                </span>
+                <input
+                  class="shooting-shirt-section__quantity-input"
+                  type="number"
+                  min="0"
+                  max="99"
+                  placeholder="0"
+                  inputmode="numeric"
+                  data-size-quantity
+                  data-size-label="Large (M9-12 / W11-13)"
+                >
+              </label>
+
+              <label class="shooting-shirt-section__size-row custom-varsity-sock-section__size-row">
+                <span class="custom-varsity-sock-section__size-copy">
+                  <span class="shooting-shirt-section__size-name">X-Large</span>
+                </span>
+                <input
+                  class="shooting-shirt-section__quantity-input"
+                  type="number"
+                  min="0"
+                  max="99"
+                  placeholder="0"
+                  inputmode="numeric"
+                  data-size-quantity
+                  data-size-label="X-Large (M13-16)"
+                >
+              </label>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="shooting-shirt-section__panel shooting-shirt-section__panel--colors">
+        <div class="shooting-shirt-section__field-header">
+          <span class="shooting-shirt-section__field-label">1. Sock Color</span>
+          <button type="button" class="shooting-shirt-section__reset-link" data-reset-color>Reset to default</button>
+        </div>
+
+        <div class="shooting-shirt-section__color-studio custom-varsity-sock-section__color-studio">
+          <div class="custom-varsity-sock-section__color-topline">
+            <p class="shooting-shirt-section__color-apply">Choose one standard performance sock color.</p>
+            <p class="shooting-shirt-section__color-caption" data-active-color-display>#111111 (Black)</p>
+          </div>
+
+          <div class="custom-varsity-sock-section__select-shell">
+            <label class="shooting-shirt-section__field-label shooting-shirt-section__field-label--small" for="SockColorSelect-{{ section.id }}">Stock Color</label>
+            <select
+              id="SockColorSelect-{{ section.id }}"
+              class="shooting-shirt-section__select-input"
+              data-sock-color-select
+            >
+              <option value="#111111" data-color-name="Black" data-color-code="A3-3-BLK" selected>Black · A3-3-BLK</option>
+              <option value="#FFFFFF" data-color-name="White" data-color-code="A3-3-WHT">White · A3-3-WHT</option>
+            </select>
+          </div>
+
+          <div class="shooting-shirt-section__color-summary">
+            <div class="shooting-shirt-section__color-summary-item">
+              <span class="shooting-shirt-section__color-summary-label">Sock Color</span>
+              <span class="shooting-shirt-section__color-summary-value" data-color-summary>#111111 (Black)</span>
+            </div>
+            <div class="shooting-shirt-section__color-summary-item">
+              <span class="shooting-shirt-section__color-summary-label">Color Code</span>
+              <span class="shooting-shirt-section__color-summary-value" data-color-code-summary>A3-3-BLK</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="shooting-shirt-section__panel shooting-shirt-section__panel--upload">
+        <div class="shooting-shirt-section__field-header">
+          <span class="shooting-shirt-section__field-label">3. Logo Upload</span>
+          <span class="shooting-shirt-section__field-meta">SVG, AI, EPS only</span>
+        </div>
+        <div class="shooting-shirt-section__upload-copy">
+          <p class="shooting-shirt-section__upload-headline">One production-ready vector logo file is required.</p>
+          <p class="shooting-shirt-section__upload-note">This upload stays attached to the order for production review.</p>
+        </div>
+        <input
+          class="shooting-shirt-section__file-input"
+          type="file"
+          name="properties[Logo Upload]"
+          accept=".svg,.ai,.eps"
+          data-vector-upload
+          required
+        >
+        <p class="shooting-shirt-section__upload-filename" data-upload-name>No file selected</p>
+      </section>
+
+      <section class="shooting-shirt-section__panel shooting-shirt-section__panel--notes">
+        <details class="custom-varsity-sock-section__accordion">
+          <summary class="custom-varsity-sock-section__accordion-summary">
+            <span class="shooting-shirt-section__field-label">4. Order Notes</span>
+            <span class="shooting-shirt-section__field-meta">Optional</span>
+          </summary>
+          <div class="custom-varsity-sock-section__accordion-body">
+            <textarea
+              id="SockOrderNotes-{{ section.id }}"
+              class="shooting-shirt-section__textarea"
+              name="properties[Order Notes]"
+              rows="5"
+              placeholder="Add any team, delivery, or fulfillment notes here."
+            ></textarea>
+          </div>
+        </details>
+      </section>
+
+      <section class="shooting-shirt-section__panel shooting-shirt-section__panel--summary">
+        <div class="shooting-shirt-section__field-header">
+          <span class="shooting-shirt-section__field-label">Order Summary</span>
+          <span class="shooting-shirt-section__field-meta">Saved with the order</span>
+        </div>
+
+        <div class="shooting-shirt-section__order-summary">
+          <div class="shooting-shirt-section__order-summary-item">
+            <span class="shooting-shirt-section__order-summary-label">Sock Color</span>
+            <span class="shooting-shirt-section__order-summary-value" data-summary-color>#111111 (Black)</span>
+          </div>
+          <div class="shooting-shirt-section__order-summary-item">
+            <span class="shooting-shirt-section__order-summary-label">Color Code</span>
+            <span class="shooting-shirt-section__order-summary-value" data-summary-color-code>A3-3-BLK</span>
+          </div>
+          <div class="shooting-shirt-section__order-summary-item">
+            <span class="shooting-shirt-section__order-summary-label">Total Pairs</span>
+            <span class="shooting-shirt-section__order-summary-value" data-summary-total-pairs>0 pairs</span>
+          </div>
+          <div class="shooting-shirt-section__order-summary-item">
+            <span class="shooting-shirt-section__order-summary-label">{{ total_label }}</span>
+            <span class="shooting-shirt-section__order-summary-value" data-summary-order-total>$0.00</span>
+          </div>
+          <div class="shooting-shirt-section__order-summary-item">
+            <span class="shooting-shirt-section__order-summary-label">Logo Upload</span>
+            <span class="shooting-shirt-section__order-summary-value" data-summary-upload>No file selected</span>
+          </div>
+          <div class="shooting-shirt-section__order-summary-item custom-varsity-sock-section__order-summary-item--wide">
+            <span class="shooting-shirt-section__order-summary-label">Size Breakdown</span>
+            <span class="shooting-shirt-section__order-summary-value custom-varsity-sock-section__order-summary-value--wrap" data-summary-size-breakdown>No sizes entered yet</span>
+          </div>
+        </div>
+      </section>
+
+      <div class="shooting-shirt-section__cta-section">
+        <div class="shooting-shirt-section__cta-group">
+          <button
+            type="submit"
+            class="shooting-shirt-section__cta shooting-shirt-section__cta--primary"
+            data-add-to-cart
+            data-submitting-label="Adding Varsity Sock Order..."
+          >
+            Add Varsity Sock Order To Cart
+          </button>
+        </div>
+      </div>
+
+      <p class="shooting-shirt-section__rules">{{ rules_copy }}</p>
+    </form>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Varsity Sock Order",
+  "tag": "section",
+  "class": "custom-varsity-sock-section",
+  "settings": [
+    { "type": "number", "id": "unit_price", "label": "Unit Price", "default": 12 },
+    { "type": "number", "id": "min_pieces", "label": "Minimum Pairs", "default": 1 },
+    { "type": "textarea", "id": "intro_copy", "label": "Intro Copy", "default": "Build your varsity sock order with one stock color selection, a full size breakdown, required vector logo upload, and saved pricing details in the same streamlined Crossover Culture order flow." }
+  ],
+  "presets": [{ "name": "Varsity Sock Order" }]
+}
+{% endschema %}

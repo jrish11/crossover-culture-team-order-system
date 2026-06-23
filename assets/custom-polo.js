@@ -59,6 +59,7 @@
     const mainImage = section.querySelector('[data-main-image]');
     const thumbnails = Array.from(section.querySelectorAll('[data-gallery-thumb]'));
     const form = section.querySelector('[data-polo-form]');
+    const cartQuantityInput = section.querySelector('[data-cart-quantity]');
     const wordingInput = section.querySelector('[data-team-wording]');
     const wordingCount = section.querySelector('[data-wording-count]');
     const fontSelect = section.querySelector('[data-font-select]');
@@ -273,7 +274,10 @@
         return;
       }
 
+      const totalPieces = quantityInputs.reduce((sum, input) => sum + (Math.max(parseInt(input.value || '0', 10) || 0, 0)), 0);
       sizeBreakdownProperty.value = buildSizeBreakdown().join(' | ');
+      totalPiecesProperty.value = String(totalPieces);
+      cartQuantityInput.value = String(Math.max(totalPieces, 1));
       addToCartButton.disabled = true;
       addToCartButton.textContent = submittingLabel;
       HTMLFormElement.prototype.submit.call(form);
